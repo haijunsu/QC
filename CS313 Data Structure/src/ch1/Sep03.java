@@ -1,4 +1,4 @@
-package cs313.ch1;
+package ch1;
 
 import java.io.BufferedReader;
 import java.io.IOException;

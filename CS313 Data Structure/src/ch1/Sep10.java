@@ -1,4 +1,4 @@
-package cs313.ch1;
+package ch1;
 
 /**
  * An array contains either digits or space. A procedure has as its input the

@@ -1,4 +1,4 @@
-package cs313.ch3;
+package ch3;
 
 /**
  * Find middle element in a SingleLinkedList
