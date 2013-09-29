@@ -3,6 +3,11 @@ package ch3;
 /**
  * Find middle element's position in a SingleLinkedList. If the list size is
  * even, the middle element's position is size divided by 2.
+ * 
+ * Methods:
+ * 	  findMiddleElementPositionWithLinkSize(SingleLinkedList)
+ *    findMiddleElementPosition(SingleLinkedList)
+ *    findMiddleElement(SingleLinkedList)
  *
  * Output:
  * List size is 10
