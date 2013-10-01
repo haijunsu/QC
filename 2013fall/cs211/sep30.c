@@ -7,14 +7,11 @@ void swap(int &i, int &j) {
 	j = t;
 }
 
-// need figure out why it doesn't work
 void swap2(int* i, int* j) {
-	int *t;
-	t = (int *)i;
-	i = (int *)j;
-	j = (int *)t;
-	cout << "ij(): " << *i << *j <<endl;
-	cout << "ij(): " << i << j <<endl;
+	int t;
+	t = *i;
+	*i = *j;
+	*j = t;
 }
 
 int main() {
