@@ -18,7 +18,7 @@ import java.util.Arrays;
  * new array: [A, a, age, bred, began, Roman, more, order, new, Rowena, A, A, car, 
  * fast, Race, safe, toyota, Toyota]
  * Input string: A new order began a more Roman age bred Rowena
- * Reversed string: Rowena bred age Roman more a began order new A 
+ * Reversed string: anewoR derb ega namoR erom a nageb redro wen A
  * 'A dog, a plan, a canal: pagoda.' is a palindrome.
  * 'A man, a plan, a canal: panama.' is a palindrome.
  * 'A new order began, a more Roman age bred Rowena.' is a palindrome.
@@ -126,13 +126,31 @@ public class Project2 {
 	 */
 	private void reverseStrings(String str) {
 		System.out.println("Input string: " + str);
-		String[] array = str.split(" ");
+		//String[] array = str.split(" ");
+		char[] array = str.toCharArray();
 		reverseArray(array);
 		System.out.print("Reversed string: ");
 		for (int i = 0; i < array.length; i++) {
-			System.out.print(array[i] + " ");
+			System.out.print(array[i]);
 		}
 		System.out.println();
+	}
+
+	/**
+	 * Resverse a char array
+	 * 
+	 * @param array
+	 */
+	private void reverseArray(char[] array) {
+		int i = 0;
+		int j = array.length - 1;
+		while (i < j) {
+			char tmp = array[i];
+			array[i] = array[j];
+			array[j] = tmp;
+			i++;
+			j--;
+		}
 	}
 
 	/**
