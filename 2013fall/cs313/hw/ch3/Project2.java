@@ -137,7 +137,7 @@ public class Project2 {
 	}
 
 	/**
-	 * Resverse a char array
+	 * Reverse a char array
 	 * 
 	 * @param array
 	 */
@@ -154,7 +154,7 @@ public class Project2 {
 	}
 
 	/**
-	 * Resverse a string array
+	 * Reverse a string array
 	 * 
 	 * @param array
 	 */
