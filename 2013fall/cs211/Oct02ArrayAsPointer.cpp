@@ -11,5 +11,6 @@ int main() {
 	cout<<"The address of b+1 is: "<<b+1<<endl;   
 	cout<<"The address of &b is: "<<&b<<endl;  ; 
 	cout<<"The address of &b+1 is: "<<&b+1<<endl<<endl;
+	cout<<"The address of (&b+1) - (&b) is: "<<(&b+1) - (&b)<<endl<<endl;
 	return 0;
 }
