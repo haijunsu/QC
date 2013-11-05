@@ -250,7 +250,9 @@ class ArrayBinaryTree {
 		// position 0 is reserved by tree.
 		// position 1 is the root node
 		this.height = height;
-		this.nodes = new Integer[(int) Math.pow(2.0d, (double) height)];
+		// The number of nodes equals 2^(h+1)-1. Because position 0 has been
+		// reserved, array length is 2^(h+1)
+		this.nodes = new Integer[(int) Math.pow(2.0d, (double) (height + 1))];
 	}
 
 	/**
