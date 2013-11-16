@@ -304,7 +304,9 @@ public class ExpressionCalculator {
 		case '/':
 			result = src1 / src2;
 			break;
-
+		case '%':
+			result = src1 % src2;
+			break;
 		default:
 			System.out.println("Unknow operation: "
 					+ Arrays.toString(Character.toChars(operator)));
@@ -382,7 +384,7 @@ public class ExpressionCalculator {
 	 * @return
 	 */
 	private boolean isOperator(char c) {
-		return c == '+' || c == '-' || c == '*' || c == '/';
+		return c == '+' || c == '-' || c == '*' || c == '/' || c == '%';
 	}
 
 	/**
@@ -392,7 +394,7 @@ public class ExpressionCalculator {
 	 * @return
 	 */
 	private boolean isPriorityOperator(char c) {
-		return c == '*' || c == '/';
+		return c == '*' || c == '/' || c== '%';
 	}
 
 	/**
@@ -427,6 +429,7 @@ public class ExpressionCalculator {
 			System.out.println("Postfix Notation expression: " + pfnttEx);
 			System.out.println("Result of Postfix Notation expression: "
 					+ proj.calculatePostfixNotationExpression(pfnttEx));
+			while (true) {
 			System.out.println();
 			System.out.print("Please input your expression: ");
 			Scanner scanner = new Scanner(System.in);
@@ -436,7 +439,7 @@ public class ExpressionCalculator {
 			System.out.println("Result of Postfix Notation expression: "
 					+ formatNumber(proj
 							.calculatePostfixNotationExpression(pfnttEx)));
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
