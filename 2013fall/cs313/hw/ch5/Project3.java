@@ -1,9 +1,13 @@
 package ch5;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,7 +46,7 @@ public class Project3 {
 		proj.preOrderVisit();
 		proj.postOrderVisit();
 		proj.inOrderVisit();
-
+		proj.levelVisit();
 	}
 
 	/**
@@ -53,7 +57,7 @@ public class Project3 {
 		Pattern nodePattern = Pattern
 				.compile("(^(\\s*)(\\d+)(\\s*),(\\s*)(\\d+)(\\s*))|(^(\\s*)0(\\s*))");
 		// ask for tree height
-		System.out.print("Please input the heigh value of your tree: ");
+		System.out.print("Please input the height value of your tree: ");
 		while (true) {
 			Scanner scan = new Scanner(System.in);
 			int height = scan.nextInt();
@@ -97,6 +101,58 @@ public class Project3 {
 			}
 		}
 
+	}
+
+	/**
+	 * Traverse a binary tree in level
+	 */
+	private void levelVisit() {
+		System.out.println("levelVisit tree nodes: ");
+		// clean visitStatus
+		visitStatus.clear();
+		Map<Integer, ArrayList<Integer>> levelNodes = new HashMap<Integer, ArrayList<Integer>>();
+		int nodeIndex = 1;
+		int level = 0;
+		int counter = visitCounter(nodeIndex);
+		while (!(nodeIndex == 1 && counter == 2)) {
+			if (counter == 0) {
+				// visit node and store node in its level
+				ArrayList<Integer> nodes = levelNodes.get(level);
+				if (nodes == null) {
+					nodes = new ArrayList<Integer>();
+				}
+				nodes.add(tree.getNodeValue(nodeIndex));
+				levelNodes.put(level, nodes);
+				if (tree.hasLeft(nodeIndex)) {
+					// visit left node
+					nodeIndex = tree.left(nodeIndex);
+					level ++;
+				}
+			} else if (counter == 1) {
+				// visit right node
+				if (tree.hasRright(nodeIndex)) {
+					nodeIndex = tree.right(nodeIndex);
+					level ++;
+				}
+			} else {
+				// finished children, back to parent
+				nodeIndex = tree.getParent(nodeIndex);
+				level --;
+			}
+			counter = visitCounter(nodeIndex);
+		}
+		Set<Integer> levels = levelNodes.keySet();
+		for (Iterator<Integer> iterator = levels.iterator(); iterator.hasNext();) {
+			Integer integer = (Integer) iterator.next();
+			List<Integer> nodes = levelNodes.get(integer);
+			for (Iterator<Integer> iterator2 = nodes.iterator(); iterator2.hasNext();) {
+				Integer node = (Integer) iterator2.next();
+				System.out.print(node + "\t");
+			}
+			System.out.println();
+		}
+		System.out.println();
+		visitStatus.clear();
 	}
 
 	/**
