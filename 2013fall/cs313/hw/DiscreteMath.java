@@ -1,13 +1,12 @@
 /*
- * 
+ *
  */
 
 /**
- * 
+ *
  * @author Haijun Su Created date: 2013-11-14
  */
 public class DiscreteMath {
-
 	/**
 	 * @param args
 	 */
