@@ -16,3 +16,7 @@
 (/ (- (- ( - 11)) (sqrt (- (* (- 11) (- 11)) (* (* 4 1) (- 1302))))) (* 2 1))
 ; exercise 7
 ; Try to think of an expression (- <expr>1 <expr>2) for which one of the argument evaluation orders would produce an error but the other would not
+; next expression is wrong
+(- (+ x 7) (- y 3) (setf x 5) (setf y 9))
+; next expression works normal
+(- (+ x 7) (setf x 5) (setf y 9) (- y 3))
