@@ -57,4 +57,20 @@
 	(list (nth 1 L) (car L)))
 (defun switch2 (L)
 	(reverse L))
+; 15. find x from e
+(setf e '(a b x d))
+(car (cddr E))
+(setf e '(a (b (x d))))
+(car (car (cdr (car (cdr e)))))
+(setf e '(((a (b (x) d)))))
+(car (car (cdr (car (cdr (car (car e)))))))
+
+; 16. Build list only with quoted symbols, NIL, and call cons
+; (A B X D)
+(cons 'a (cons 'b (cons 'x (cons 'd nil))))
+; (A (B (X D)))
+(list 'a (list 'b (cons 'x (cons 'd nil))))
+; (((A (B (X) D))))
+(list (list (list 'a (list 'b (cons 'x nil) 'd))))
+
 
