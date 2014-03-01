@@ -122,3 +122,42 @@
 		      ((< s 60) 'F))
 		NIL))
 	
+; 7. Define a LISP function GT with the following properties. GT takes two
+; arguments. It returns T if both arguments are numbers and the first argument
+; is strictly greater than the second. In all other cases GT returns NIL.
+;
+; Solution to Problem 7
+(defun gt (A B)
+	(and (numberp A) (numberp B) (> A B)))
+
+; 8. Define a LISP function SAME-SIGN with the following properties. SAME-SIGN 
+; takes two arguments. It returns T if both arguments are equal to zero, if 
+; both are negative numbers, or if both are positive numbers. In all other
+; cases SAME-SIGN returns NIL.
+; Examples: 
+; 	(SAME-SIGN 0 -2) => NIL
+; 	(SAME-SIGN -3 -9) => T
+; 	(SAME-SIGN 'A 'A) => NIL
+;
+; Solution to Problem 8
+(defun same-sign (A B)
+	(and (numberp A) 
+	     (numberp B)
+	     (or (and (zerop A) (zerop B))
+		 (and (minusp A) (minusp B))
+		 (and (plusp A) (plusp B)))))
+
+; 9. Define a LISP function SAFE-DIV with the following properties. SAFE-DIV
+; takes two arguments. If both arguments are numbers and the second is not
+; equal to zero, then it returns the result of dividing the first argument
+; by the second. In all other cases it returns NIL.
+; Exampls: 
+; 	(SAFE-DIV 6 4) => 3/2
+; 	(SAFE-DIV 6.0 4) => 1.5
+; 	(SAFE-DIV 6 0) => NIL
+; 	(SAFE-DIV 6 0.0) => NIL
+; 	(SAFE-DIV '(6) 4) => NIL
+;
+; Solution to Problem 9
+(defun safe-div (A B)
+	(and (numberp A) (numberp B) (not (zerop B)) (/ A B)))
