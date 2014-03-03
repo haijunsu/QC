@@ -1,20 +1,7 @@
-#include  <stdio.h>
-#include "unistd.h"
-
-int main() {
-	pid t pid;
-	/* fork a child process */
-	pid = fork();
-	if(pid < 0){ //error occurred
-		fprintf(stderr, "Fork Failed");
-		exit(-1);
-	}
-	else if (pid == 0) { // child process
-		execlp("/bin/ls", "ls", NULL);
-	} else { // parent process
-		// parent will wait for the child to complete
-		wait(NULL);
-		printf("Child Complete");
-		exit(0);
-	}
+int main(void) {
+/* The child process's new program
+ * 	This program replaces the parent's program */
+	printf("Process[%d]: child in execution ...\n",getpid());
+	sleep(1);
+	printf("Process[%d]: child terminating ...\n", getpid());
 }

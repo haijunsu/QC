@@ -1,33 +1,16 @@
-#include <stdio.h>
-#include <windows.h>
+nclude <sys/wait.h>
+#define NULL 0
 
-int main(VOID) {
-	STARTUPINFO si;
-	PROCWESS.INFORMATION pi;
-	// allocate memory
-	ZeroMemory(&si, sizeof(si));
-	si.cb = sizeof(si);
-	ZeroMemory(&pi, sizeof(pi));
-
-	// create child process
-	if (CreateProcess(NULL, //use command line
-		'C:\\WINDOWS\\system32\\mspaint.exe', // command line
-		NULL, // don't inherit process handle
-		NULL, // don't inherit thread handle
-		FALSE, // disable handle inheritance
-		0, // no creation flags
-		NULL, // use parent's environment block
-		NULL, // use parent's existing directory
-		&si,
-		&pi))
-		{
-			fprintf(stderr, "Create Process Failed");
-			return -1;
-		}
-		// parent will wait for the child to complete 
-		WaitForSingleObject(pi.hProcess, INFINITE);
-		printf("Child Complete");
-		// close handles
-		CloseHandle(pi.hProcess);
-		CloseHandle(pi.hThread);
+int main (void) {
+	if (fork() ==0){ /*This is the child process*/
+		execve("child", NULL, NULL);
+	exit(0);  /* Should never get here, terminate*/
+	}
+	/* Parent code here*/
+	printf("Process[%d]: Parent in execution ...\n", getpid());
+	sleep(5);
+	if(wait(NULL) > 0)  /* Child terminating*/
+		printf("Process[%d]: Parent detects terminating child \n",
+			getpid());
+	printf("Process[%d]: Parent terminating ...\n", getpid());
 }
