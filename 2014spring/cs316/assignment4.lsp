@@ -158,3 +158,59 @@
 				(list 
 					(car X)
 					(cons (car L) (car (cdr X))))))))
+
+; 8. Without using MEMBER, complete the following definition of a recursive
+; function POS such that if L is a list and E is an element of L then 
+; (POS E L) return the postion of the first occurrence of E in L, and such
+; that if E is not an element of L then (POS E L) returns 0.
+; 	(DEFUN POS (E L)
+; 		(COND ((ENDP L)  ...)
+; 		      ((EQUAL E (CAR L)) ...)
+; 		      (T (LET ((X (POS E (CDR L))))
+; 		      	...))))
+; Examples:
+; 	(POS 5 '(1 2 5 3 5 5 1 5)) => 3
+; 	(POS 'A '(3 2 1)) => 0
+; 	(POS '(3 B) '(3 B)) => 0
+; 	(POS '(A B) '((K) (3 R C) A (A B) (K L L) (A B))) => 4
+; 	(POS '(3 B) '((3 B))) => 1
+;
+; Solution to Problem 8
+(defun pos (E L)
+	(cond ((endp L) 0)
+	      ((equal E (CAR L)) 1)
+	      (T (let ((X (pos E (cdr L))))
+		(if (eql 0 X) 
+			0
+			(+ 1 X))))))
+
+; 9. Define a recursive function SPLIT-NUMS such that if N is a non-negative
+; integer then (SPLIT-NUMS N) returns a list of two lists: The first of the 
+; two lists consists of the even integers between 0 and N in descending order,
+; and the other list consists of the odd integers between 0 and N in descending
+; order.
+; Examples:
+; 	(SPLIT-NUMS 0) => ((0) NIL)
+; 	(SPLIT-NUMS 7) => ((6 4 2 0) (7 5 3 1))
+; 	(SPLIT-NUMS 8) => ((8 6 4 2 0) (7 5 3 1))
+;
+; Solution to Problem 9
+(defun split-nums (N)
+	(cond ((< N 0) NIL)
+	      ((eql N 0) '((0) NIL))
+	      (T (let ((X (split-nums (- n 1))))
+		(if (oddp N)
+			(list (car X) (cons N (car (cdr X))))
+			(list (cons N (car X)) (car (cdr X))))))))
+
+; In problems 10-13 the term set is used to mean a proper list of numbers and/or
+; symbols in which no atom occurs more than once. You may use MEMBER but not 
+; the function UNION, NUNION, REMOVE, DELETE, SET-DIFFERENCE, and
+; SET-EXCLUSIVE-OR.
+;
+; 10. Define a recursive function SET-UNION such that if s1 and s2 are sets 
+; then (SET-UNION s1 s2) is a set that contains the elements of s1 and the 
+; elements of s2, but no other elements. Thus (SET-UNION '(A B C D) '(C E F))
+; should return a list consisting of the atom A, B, C, D, E, and F (in any
+; order) in which no atom occurs more than once.
+;
