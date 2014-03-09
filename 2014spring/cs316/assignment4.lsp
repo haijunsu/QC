@@ -80,17 +80,16 @@
 ;
 ; Solution to Problem 1
 (defun sum (L)
-	(if (null L)
+	(if (endp L)
 		0
-		(let ((X (sum (cdr L))))
-			(+ (car L) X))))
+		(+ (car L) (sum (cdr L)))))
 
 ; 2. Define a recursive function NEG-NUMS with the properties stated in problem
 ; B. Note that NIL is a valid argument of NEG-NUMS.
 ;
 ; Solution to Problem 2
 (defun neg-nums (L)
-	(if (null L)
+	(if (endp L)
 		NIL
 		(let ((X (neg-nums (cdr L))))
 			(if (>= (car L) 0) 
@@ -102,17 +101,16 @@
 ;
 ; Solution to Problem 3
 (defun inc-list-2 (L N)
-	(if (null L)
+	(if (endp L)
 		NIL	
-		(let ((X (inc-list-2 (cdr L) N)))
-			(cons (+ (car L) N) X)))) 
+		(cons (+ (car L) N) (inc-list-2 (cdr L) N)))) 
 
 ; 4. Define a recursive function INSERT with the properties stated in problem
 ; D. Not that the second argument of INSERT may be NIL.
 ;
 ; Solution to Problem 4
 (defun insert (N L)
-	(if (null L)
+	(if (endp L)
 		(cons N ())
 		(let ((X (insert N (cdr L))))
 			(if (< (car L) N) 
@@ -126,17 +124,16 @@
 ;
 ; Solution to Problem 5
 (defun isort (L)
-	(if (null L)
+	(if (endp L)
 		NIL
-		(let ((X (isort (cdr L))))
-			(insert (car L) X))))
+		(insert (car L) (isort (cdr L)))))
 
 ; 6 Define a recursive function SPLIT-LIST with the properties stated in problem
 ; F.
 ;
 ; Solution to Problem 6
 (defun split-list (L)
-	(if (null L)
+	(if (endp L)
 		'(NIL NIL)
 		(let ((X (split-list (cdr L))))
 			(list 
@@ -148,7 +145,7 @@
 ;
 ; Solution to Problem 7
 (defun partition (L P)
-	(if (null L)
+	(if (endp L)
 		'(NIL NIL)	
 		(let ((X (partition (cdr L) P)))
 			(if (< (car L) P)
@@ -179,10 +176,9 @@
 (defun pos (E L)
 	(cond ((endp L) 0)
 	      ((equal E (CAR L)) 1)
-	      (T (let ((X (pos E (cdr L))))
-		(if (eql 0 X) 
+	      (T (if (eql 0 (pos E (cdr L))) 
 			0
-			(+ 1 X))))))
+			(+ 1 (pos E (cdr L)))))))
 
 ; 9. Define a recursive function SPLIT-NUMS such that if N is a non-negative
 ; integer then (SPLIT-NUMS N) returns a list of two lists: The first of the 
@@ -213,4 +209,63 @@
 ; elements of s2, but no other elements. Thus (SET-UNION '(A B C D) '(C E F))
 ; should return a list consisting of the atom A, B, C, D, E, and F (in any
 ; order) in which no atom occurs more than once.
+; 
+; Solution to Problem 10
+(defun set-union (x y)
+	(cond ((endp y) x) ;y is nil
+		((endp x) y) ; x is nil
+		(T 
+			(set-union
+				(if (member (car y) x) 
+					x 
+					(append x (cons (car y) NIL)))
+				(cdr y)))))
+		
+; 11. Define a recursive function SET-REMOVE such that if s is a set and x is
+; an atom in s then (SET-REMOVE x s) is a set that consists of all the elements
+; of s except x, but if s is a set and x is an atom which is not in s then
+; (SET-REMOVE x s) returns a set that is equal to s.
 ;
+; Solution to Problem 11
+(defun set-remove (x s)
+	(if (member x s)
+		(set-remove
+			x
+			(append
+				(butlast s (length (member x s)))
+				(last s (- (length (member x s)) 1))))
+		s))	
+
+; In problems 12 and 13 you may use the function SET-REMOVE from problem 11
+; 12. Define a recursive function SET-EXCL-UNION such that if s1 and s2 are
+; sets then (SET-EXCL-UNION s1 s2) is a set that contains all those atoms that
+; are neither in s1 nor in s2, and also dose not contain the atoms that are
+; in both of s1 and s2. For example, (SET-EXCL-UNION '(A B C D) '(E C F G A)) 
+; should return a list consisting of the atoms B, D, E, F and G (in any order)
+; in which no atom occurs more than once.
+;
+; Solution to problem 12
+(defun set-excl-union (x y)
+	(cond ((endp x) y)
+		((endp y) x)
+		(T
+			(set-excl-union
+				(if (member (car y) x)
+					(set-remove (car y) x)
+					(append x (cons (car y) NIL)))
+				(cdr y)))))
+; 13. Define a recursive function SINGLETONS such that if e is a list of number
+; and/or symbols then (SINGLETONS e) is a set that consists of all the atoms 
+; that occur just once in e.
+; Example:
+; 	(SINGLETONS ()) => NIL
+; 	(SINGLETONS '(G A B C B)) => (G A C)
+; 	(SINGLETONS '(H G A B C B))=>(H G A C)
+; 	(SINGLETONS '(A G A B C B)) => (G C)
+; 	(SINGLETONS '(B G A B C B)) => (G A C)
+(defun singletons (e)
+	(if (endp e)
+		NIL
+		(if (member (car e) (cdr e))
+			(singletons (set-remove (car e) e))
+			(cons (car e) (singletons (cdr e))))))
