@@ -281,8 +281,8 @@
 	(if (endp L)
 		()
 		(if (null (cadr L)) ;last element
-			(cons (funcall f (car L)) ())
-			(list 
-				(cons (funcall f (car L)) (cdr L))
-				(mapcar (lambda (L1) (car (cons (car L) (cons L1() ))
+			(cons (cons (funcall f (car L)) ()) ())
+			(append 
+				(cons (cons (funcall f (car L)) (cdr L)) ())
+				(mapcar (lambda (L1) (cons (car L) L1))
 				(foo f (cdr L)))))))
