@@ -211,4 +211,78 @@
 					(append (cons (cons (+ 1 (caar X)) (cons (cadar X) ())) ()) (cdr X)))
 				((not (eq (car L) (cadar X)))
 					(append (cons (cons 1 (cons (car L) ())) ()) X))))))
-				
+
+; 11. [Exercise 8 on p.141 of Wilesky]
+;
+; Solution to Problem 11
+;
+(defun subset (f L)
+	(if (endp L)
+		()
+		(if (funcall f (car L))
+			(cons (car L) (subset f (cdr L)))
+			(subset f (cdr L))))) 
+
+; 12. [Exercise 7 on P.141 of Wilensky]
+;
+; Solution to Problem 12
+;
+(defun our-some (f L)
+	(if (endp L)
+		NIL
+		(if (funcall f (car L))
+			L
+			(our-some f (cdr L)))))
+(defun our-every (f L)
+	(if (endp L)
+		NIL
+		(if (funcall f (car L))
+			(if (null (cadr L)); last element
+				T
+				(our-every f (cdr L)))
+			NIL)))
+
+; 13. QSORT1
+;
+; Solution to Problem 13
+;
+(defun mypp (f L P)
+	(if (endp L)
+		'(NIL NIL)
+		(let ((X (mypp f (cdr L) P)))
+			(if (funcall f (car L) P)
+				(list
+					(cons (car L) (car X))
+					(car (cdr X)))
+				(list
+					(car X)
+					(cons (car L) (car (cdr X))))))))	
+(defun qsort1 (f L)
+	(if (endp L)
+		()
+		(let ((PL (mypp f L (car L))))
+			(cond
+				((endp (car PL))
+					(cons (car L) (qsort1 f (cdr L))))
+				((endp (cdr PL))
+					(cons (qsort1 f (cdr L)) (car L)))
+				(T (append 
+					(qsort1 f (car PL))
+					(qsort1 f (cadr PL))))))))
+
+; 14. 10.12a on P420 of Sethi
+; Example:
+; 	(FOO #'- '(1 2 3 4 5)) => ((-1 2 3 4 5) (1 -2 3 4 5) (1 2 -3 4 5) 
+; 					(1 2 3 -4 5) (1 2 3 4 -5)
+;
+; Solution to Problem 14
+;
+(defun foo (f L)
+	(if (endp L)
+		()
+		(if (null (cadr L)) ;last element
+			(cons (funcall f (car L)) ())
+			(list 
+				(cons (funcall f (car L)) (cdr L))
+				(mapcar (lambda (L1) (car (cons (car L) (cons L1() ))
+				(foo f (cdr L)))))))
