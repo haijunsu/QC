@@ -286,3 +286,68 @@
 				(cons (cons (funcall f (car L)) (cdr L)) ())
 				(mapcar (lambda (L1) (cons (car L) L1))
 				(foo f (cdr L)))))))
+
+; 15. a) exercise 10.5 on p.419 of Sethi in common lisp. Name your functions
+; TR-ADD, TR-MUL and TR-FAC. Examples:
+; 	(TR-ADD '(1 2 3 4 5) 0) => 15
+; 	(TR-MUL '(1 2 3 4 5) 1) => 120
+; 	(TR-FAC 5 1) => 120
+;
+; Solution to problem 15
+;
+; a)
+; tr-add
+(defun tr-add (L result)
+	(if (endp L)
+		result
+		(tr-add-buffer (rest L) (+ (car L) result))))
+(defun tr-add-buffer (L result)
+	(tr-add L result))
+; tr-mul
+(defun tr-mul (L result)
+	(if (endp L)
+		result
+		(tr-mul-buffer (rest L) (* (car L) result))))
+(defun tr-mul-buffer (L result)
+	(tr-mul L result))
+; tr-fac
+(defun tr-fac (N result)
+	(if (< N 1)
+		result
+		(tr-fac-buffer (- N 1) (* N result))))
+(defun tr-fac-buffer (N result)
+	(tr-fac N result))
+
+
+; b)
+(defun slow-primep (N)
+	(if (eql (mod (tr-fac (- N 1) 1) N) (- N 1))
+		T
+		NIL))
+
+; 16. Example:
+; 	(transpose1 '((1 2 3 4) (5 6 7 8) (9 10 11 12)))
+; 		=> ((1 5 9) (2 6 10) (3 7 11) (4 8 12))
+;
+; 	(transpose2 '((1 2 3 4) (5 6 7 8) (9 10 11 12)))
+; 		=> ((1 5 9) (2 6 10) (3 7 11) (4 8 12))
+;
+; 	(transpose3 '((1 2 3 4) (5 6 7 8) (9 10 11 12)))
+; 		=> ((1 5 9) (2 6 10) (3 7 11) (4 8 12))
+; 
+; Solution to problem 16
+;
+(defun transpose1 (M)
+	(if (endp (cdr M))
+		(mapcar #'list (car M))
+		(mapcar #'cons (car M) (transpose1 (cdr M)))))
+
+(defun transpose2 (M)
+	(if (endp (cdar M))
+		(list (mapcar #'car M))
+		(cons (mapcar #'car M) (transpose2 (mapcar #'cdr M)))))
+
+(defun transpose3 (M)
+	(apply #'mapcar #'list M))
+; next line also works for transpose3
+;	(apply #'mapcar (cons #'list M)))
