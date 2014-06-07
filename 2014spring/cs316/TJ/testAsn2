@@ -1,0 +1,54 @@
+echo -e 'y\n0\n*\n' | java -cp . TJasn.TJ CS316ex0.java 0.me2
+echo -e 'y\n0\n*\n' | java -cp . TJasn.TJ CS316ex1.java 1.me2
+echo -e 'y\n0\n*\n' | java -cp . TJasn.TJ CS316ex2.java 2.me2
+echo -e 'y\n0\n*\n' | java -cp . TJasn.TJ CS316ex3.java 3.me2
+echo -e 'y\n0\n*\n' | java -cp . TJasn.TJ CS316ex4.java 4.me2
+echo -e 'y\n0\n*\n' | java -cp . TJasn.TJ CS316ex5.java 5.me2
+echo -e 'y\n0\n*\n' | java -cp . TJasn.TJ CS316ex6.java 6.me2
+echo -e 'y\n0\n*\n' | java -cp . TJasn.TJ CS316ex7.java 7.me2
+echo -e 'y\n0\n*\n' | java -cp . TJasn.TJ CS316ex8.java 8.me2
+echo -e 'y\n0\n*\n' | java -cp . TJasn.TJ CS316ex9.java 9.me2
+echo -e 'y\n0\n*\n' | java -cp . TJasn.TJ CS316ex10.java 10.me2
+echo -e 'y\n0\n*\n' | java -cp . TJasn.TJ CS316ex11.java 11.me2
+echo -e 'y\n0\n*\n' | java -cp . TJasn.TJ CS316ex12.java 12.me2
+echo -e 'y\n0\n*\n' | java -cp . TJasn.TJ CS316ex13.java 13.me2
+echo -e 'y\n0\n*\n' | java -cp . TJasn.TJ CS316ex14.java 14.me2
+echo -e 'y\n0\n*\n' | java -cp . TJasn.TJ CS316ex15.java 15.me2
+
+
+echo -e 'y\n0\n*\n' | java -cp TJsolclasses:. TJasn.TJ CS316ex0.java 0.sol2
+echo -e 'y\n0\n*\n' | java -cp TJsolclasses:. TJasn.TJ CS316ex1.java 1.sol2
+echo -e 'y\n0\n*\n' | java -cp TJsolclasses:. TJasn.TJ CS316ex2.java 2.sol2
+echo -e 'y\n0\n*\n' | java -cp TJsolclasses:. TJasn.TJ CS316ex3.java 3.sol2
+echo -e 'y\n0\n*\n' | java -cp TJsolclasses:. TJasn.TJ CS316ex4.java 4.sol2
+echo -e 'y\n0\n*\n' | java -cp TJsolclasses:. TJasn.TJ CS316ex5.java 5.sol2
+echo -e 'y\n0\n*\n' | java -cp TJsolclasses:. TJasn.TJ CS316ex6.java 6.sol2
+echo -e 'y\n0\n*\n' | java -cp TJsolclasses:. TJasn.TJ CS316ex7.java 7.sol2
+echo -e 'y\n0\n*\n' | java -cp TJsolclasses:. TJasn.TJ CS316ex8.java 8.sol2
+echo -e 'y\n0\n*\n' | java -cp TJsolclasses:. TJasn.TJ CS316ex9.java 9.sol2
+echo -e 'y\n0\n*\n' | java -cp TJsolclasses:. TJasn.TJ CS316ex10.java 10.sol2
+echo -e 'y\n0\n*\n' | java -cp TJsolclasses:. TJasn.TJ CS316ex11.java 11.sol2
+echo -e 'y\n0\n*\n' | java -cp TJsolclasses:. TJasn.TJ CS316ex12.java 12.sol2
+echo -e 'y\n0\n*\n' | java -cp TJsolclasses:. TJasn.TJ CS316ex13.java 13.sol2
+echo -e 'y\n0\n*\n' | java -cp TJsolclasses:. TJasn.TJ CS316ex14.java 14.sol2
+echo -e 'y\n0\n*\n' | java -cp TJsolclasses:. TJasn.TJ CS316ex15.java 15.sol2
+
+
+diff -c 0.me2 0.sol2
+diff -c 1.me2 1.sol2
+diff -c 2.me2 2.sol2
+diff -c 3.me2 3.sol2
+diff -c 4.me2 4.sol2
+diff -c 5.me2 5.sol2
+diff -c 6.me2 6.sol2
+diff -c 7.me2 7.sol2
+diff -c 8.me2 8.sol2
+diff -c 9.me2 9.sol2
+diff -c 10.me2 10.sol2
+diff -c 11.me2 11.sol2
+diff -c 12.me2 12.sol2
+diff -c 13.me2 13.sol2
+diff -c 14.me2 14.sol2
+diff -c 15.me2 15.sol2
+
+

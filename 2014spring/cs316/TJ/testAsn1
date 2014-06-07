@@ -1,0 +1,51 @@
+java -cp . TJ1asn.TJ CS316ex0.java 0.me > null
+java -cp . TJ1asn.TJ CS316ex1.java 1.me > null
+java -cp . TJ1asn.TJ CS316ex2.java 2.me > null
+java -cp . TJ1asn.TJ CS316ex3.java 3.me > null
+java -cp . TJ1asn.TJ CS316ex4.java 4.me > null
+java -cp . TJ1asn.TJ CS316ex5.java 5.me > null
+java -cp . TJ1asn.TJ CS316ex6.java 6.me > null
+java -cp . TJ1asn.TJ CS316ex7.java 7.me > null
+java -cp . TJ1asn.TJ CS316ex8.java 8.me > null
+java -cp . TJ1asn.TJ CS316ex9.java 9.me > null
+java -cp . TJ1asn.TJ CS316ex10.java 10.me > null
+java -cp . TJ1asn.TJ CS316ex11.java 11.me > null
+java -cp . TJ1asn.TJ CS316ex12.java 12.me > null
+java -cp . TJ1asn.TJ CS316ex13.java 13.me > null
+java -cp . TJ1asn.TJ CS316ex14.java 14.me > null
+java -cp . TJ1asn.TJ CS316ex15.java 15.me > null
+java -cp TJ1solclasses:. TJ1asn.TJ CS316ex0.java 0.sol > null
+java -cp TJ1solclasses:. TJ1asn.TJ CS316ex1.java 1.sol > null
+java -cp TJ1solclasses:. TJ1asn.TJ CS316ex2.java 2.sol > null
+java -cp TJ1solclasses:. TJ1asn.TJ CS316ex3.java 3.sol > null
+java -cp TJ1solclasses:. TJ1asn.TJ CS316ex4.java 4.sol > null
+java -cp TJ1solclasses:. TJ1asn.TJ CS316ex5.java 5.sol > null
+java -cp TJ1solclasses:. TJ1asn.TJ CS316ex6.java 6.sol > null
+java -cp TJ1solclasses:. TJ1asn.TJ CS316ex7.java 7.sol > null
+java -cp TJ1solclasses:. TJ1asn.TJ CS316ex8.java 8.sol > null
+java -cp TJ1solclasses:. TJ1asn.TJ CS316ex9.java 9.sol > null
+java -cp TJ1solclasses:. TJ1asn.TJ CS316ex10.java 10.sol > null
+java -cp TJ1solclasses:. TJ1asn.TJ CS316ex11.java 11.sol > null
+java -cp TJ1solclasses:. TJ1asn.TJ CS316ex12.java 12.sol > null
+java -cp TJ1solclasses:. TJ1asn.TJ CS316ex13.java 13.sol > null
+java -cp TJ1solclasses:. TJ1asn.TJ CS316ex14.java 14.sol > null
+java -cp TJ1solclasses:. TJ1asn.TJ CS316ex15.java 15.sol > null
+
+diff -c 0.me 0.sol
+diff -c 1.me 1.sol
+diff -c 2.me 2.sol
+diff -c 3.me 3.sol
+diff -c 4.me 4.sol
+diff -c 5.me 5.sol
+diff -c 6.me 6.sol
+diff -c 7.me 7.sol
+diff -c 8.me 8.sol
+diff -c 9.me 9.sol
+diff -c 10.me 10.sol
+diff -c 11.me 11.sol
+diff -c 12.me 12.sol
+diff -c 13.me 13.sol
+diff -c 14.me 14.sol
+diff -c 15.me 15.sol
+
+
