@@ -1,4 +1,4 @@
-nclude <sys/wait.h>
+#include <sys/wait.h>
 #define NULL 0
 
 int main (void) {
