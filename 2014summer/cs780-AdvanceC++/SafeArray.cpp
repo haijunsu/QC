@@ -3,10 +3,18 @@
 #include <cassert>
 using namespace std;
 
+
+template <class T> // forward declaration
+class SA;
+
+template <class T> //forward declaration
+ostream& operator<<(ostream& os, SA<T> s);
+
+template <class T>
 class SA {
     private:
    	 int low, high;
-   	 int* p;
+   	 T* p;
     public:
     // default constructor
     // allows for writing things like SA a;
@@ -24,7 +32,7 @@ class SA {
    	 }
    	 low=l;
    	 high=h;
-   	 p=new int[h-l+1];
+   	 p=new T[h-l+1];
     }
     // single parameter constructor lets us
     // create a SA almost like a "standard" one by writing
@@ -32,13 +40,13 @@ class SA {
     SA(int i) {
    	 low=0;
    	 high=i-1;
-   	 p=new int[i];
+   	 p=new T[i];
     }
     // copy constructor for pass by value and
     // initialization
     SA(const SA & s){
    	 int size=s.high-s.low+1;
-   	 p=new int[size];
+   	 p=new T[size];
    	 for(int i=0; i<size; i++)
    		 p[i]=s.p[i];
    	 low=s.low;
@@ -50,7 +58,7 @@ class SA {
     }
     //overloaded [] lets us write
     //SA x(10,20); x[15]= 100;
-    int& operator[](int i){
+    T& operator[](int i){
    	 if(i<low || i>high){
    		 cout<< "index "<<i<<" out of range"<<endl;
    		 exit(1);
@@ -63,7 +71,7 @@ class SA {
    	 if(this==&s)return *this;
    	 delete [] p;
    	 int size=s.high-s.low+1;
-   	 p=new int[size];
+   	 p=new T[size];
    	 for(int i=0; i<size; i++)
    	 p[i]=s.p[i];
    	 low=s.low;
@@ -71,33 +79,32 @@ class SA {
    	 return *this;
     }
     // overloads << so we can directly print SAs
-    friend ostream& operator<<(ostream& os, SA s);
+    friend ostream& operator<< <T>(ostream& os, SA<T> s);
 };
-ostream& operator<<(ostream& os, SA s){
+
+template <class T>
+ostream& operator<<(ostream& os, SA<T> s){
     int size=s.high-s.low+1;
     for(int i=0; i<size; i++)
    	 cout<<s.p[i]<<endl;
     return os;
 };
+
+
 int main(){
-    SA a(10), b(3,5);
-    b[3]=3; b[4]=4; b[5]=5;
+	SA<SA<int> > sa(2);
+	sa[0] = SA<int>(2);
+	sa[0][0]=1;
+	cout <<"test: "<< sa[0][0]<<endl;
+    SA<float> a(10);
     int i;
     for( i=0;i<10;i++)
-   	 a[i]=10-i;
-    cout<<"printing a the first time" <<endl;
-    cout<<a<<endl;
+   	 a[i]= i/2.0f;
     cout<<"printing using []"<<endl;
     for( i=0;i<10;i++)
    	 cout<<a[i]<<endl;
-    //write your own sort
-    //Sort(a,10);
-    cout<<"printing a the second time" <<endl;
-    cout<<a<<endl;
-    b[4]=12;
-    cout<<"printing b " <<endl;
-    cout<<b<<endl;
-    a[10]=12; // should print an error message and exit
+    cout<<"and now with overloaded <<"<<endl;
+    cout<<a;
     return 0;
 }
 

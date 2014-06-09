@@ -1,6 +1,9 @@
 #include <iostream>
 #include <cstdlib>
 #include <cassert>
+#include <fstream>
+#include <sstream>
+#include <vector>
 
 using namespace std;
 
@@ -134,6 +137,10 @@ class SafeMatrix {
 	// 4 parameter constructor lets us write
     // SafeMatrix x(10,20,10,20);
     SafeMatrix(int r_l, int r_h, int c_l, int c_h){
+		if (r_h <= r_l || c_h <= c_l) {
+			cout << "constructor error in bounds definition" << endl;
+			throw 200;
+		}
 		row_low = r_l;
 		row_high = r_h;
 		col_low = c_l;
@@ -192,15 +199,19 @@ class SafeMatrix {
 		if (col_size != s_row_size) {
 			cout << "Column size (" << col_size;
 			cout << ") and S's row size (" << s_row_size;
-			cout << " are not equal." << endl;
-			exit(1);
+			cout << ") are not equal." << endl;
+			throw 200;
 		}
 
 		SafeMatrix<T> product(row_low, row_high, s.col_low, s.col_high);
 		for (int i = product.row_low; i <= product.row_high; i++) {
 			for (int j = product.col_low; j <= product.col_high; j++) {
 				for (int k=0; k<=col_high-col_low; k++) {
-					product(i, j) += p[i][k + col_low] * s(k + s.row_low, j);
+					if (k == 0) {
+						product(i, j) = p[i][k + col_low] * s.p[k + s.row_low][j];
+					} else {
+						product(i, j) += p[i][k + col_low] * s.p[k + s.row_low][j];
+					}
 				}
 			}
 		}
@@ -215,15 +226,135 @@ template <class T>
 ostream& operator<<(ostream& os, SafeMatrix<T> s){
     for(int i=s.row_low; i<=s.row_high; i++) {
 		for (int j=s.col_low; j<=s.col_high; j++) {
-			cout<<s.p[i][j] << " ";
+			os<<s.p[i][j] << " ";
 		}
-		cout<<endl;
+		os<<endl;
 	}
     return os;
 };
 
-int main(){
+SafeMatrix<int> getSM(vector<int> tokens) {
+	if(tokens.size() == 1){
+		SafeMatrix<int> sm1(tokens.at(0));
+		return sm1;
+	} else if (tokens.size() == 2){
+		SafeMatrix<int> sm2(tokens.at(0), tokens.at(1));
+		return sm2;
+	} else if (tokens.size() == 4){
+		SafeMatrix<int> sm4(tokens.at(0), tokens.at(1), tokens.at(2), tokens.at(3));
+		return sm4;
+	}
+	return NULL;
+}
+
+SafeMatrix<int> buildSM(vector<int> values1, vector<int> values2) {
+	SafeMatrix<int> sm1 = getSM(values1);
+	
+	int col_low, col_high, row_low, row_high;
+	if (values1.size() == 1) {
+		row_low = 0;
+		row_high = values1.at(0) - 1;
+		col_low = 0;
+		col_high = values1.at(0) - 1;
+	} else if (values1.size() == 2) {
+		row_low = 0;
+		row_high = values1.at(0) - 1;
+		col_low = 0;
+		col_high = values1.at(1) - 1;
+	} else if (values1.size() == 4) {
+		row_low = values1.at(0);
+		row_high = values1.at(1);
+		col_low = values1.at(2);
+		col_high = values1.at(3);
+	}
+
+	int col_size = col_high - col_low + 1;
+	int row = 0;
+	for (int i=0; i<values2.size(); i++) {
+		if (i > 0 && i % col_size == 0) 
+			row++;
+		sm1(row + row_low, i%col_size + col_low) = values2.at(i);
+	}
+	return sm1;
+}
+
+vector<int> splitLine(string line) {
+	string buf; 
+	stringstream ss(line);
+	vector<int> tokens;
+	while (ss >> buf) {
+		tokens.push_back(atoi(buf.c_str()));
+	}
+	return tokens;
+}
+
+int main(int argc, char* argv[]){
  
+	if (argc < 3) { //first argument(argv[0]) is the program path
+		cerr << "usage: " << argv[0] << " <input file> <dest file>" << endl;
+		return 0;
+	}
+       
+	//note the arguments to main being used below
+	ifstream input(argv[1]); //we'll assume the file exists
+	ofstream output(argv[2]);
+	char ch;
+	input >> noskipws; //the noskipws flag allows for whitespace characters to be extracted
+    string line;
+	while (getline(input, line)){
+		//cout << line << endl;
+		vector<int> values1 = splitLine(line);
+		getline(input, line);
+		vector<int> values2 = splitLine(line);
+		SafeMatrix<int> sm1 = buildSM(values1, values2);
+		getline(input, line);
+		vector<int> values3 = splitLine(line);
+		getline(input, line);
+		vector<int> values4 = splitLine(line);
+		SafeMatrix<int> sm2 = buildSM(values3, values4);
+		output << "Matrix 1 :" << endl;
+		output << sm1 << endl;
+		output << "Matrix 2 :" << endl;
+		output << sm2 << endl;
+		output << "Matrix 1 * Matrix 2 :" <<endl;
+		try {
+			SafeMatrix<int> sm3 = sm1 * sm2;
+			output << sm3 << endl;
+		} catch (int e) {
+			output << "IMPOSSIBLE" << endl;
+		}
+/*		if (!sm3) {
+			output << "IMPOSSIBLE" << endl;
+		} else {
+			output << sm3 << endl;
+		} */
+		output << endl;
+	}
+
+	output << endl;
+	/*
+	SafeMatrix<int> sm(2, 2);
+	sm(0,0) = 1;
+	sm(0,1) = 2;
+	sm(1,0) = 3;
+	sm(1,1) = 4;
+	output << sm;
+	input.close();
+	output << flush;
+	output.close();
+
+	//string str("Split me by whitespaces");
+    string buf; // Have a buffer string
+    stringstream ss(line); // Insert the string into a stream
+
+    vector<string> tokens; // Create vector to hold our words
+
+    while (ss >> buf) {
+        tokens.push_back(buf);
+		cout<<buf << " ";
+	}
+
+	
 
 	cout << "sm:" << endl;
 	SafeMatrix<int> sm(2, 2);
@@ -251,8 +382,7 @@ int main(){
 	cout << sm3 << endl;
 	
 	cout << sm2 * sm3 << endl;
-
-
+*/
     return 0;
 }
 

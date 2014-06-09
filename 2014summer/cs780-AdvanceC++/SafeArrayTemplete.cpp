@@ -89,11 +89,13 @@ ostream& operator<<(ostream& os, SA<T> s){
    	 cout<<s.p[i]<<endl;
     return os;
 };
+
+
 int main(){
-    SA<int> a(10);
+    SA<float> a(10);
     int i;
     for( i=0;i<10;i++)
-   	 a[i]=i;
+   	 a[i]= i/2.0f;
     cout<<"printing using []"<<endl;
     for( i=0;i<10;i++)
    	 cout<<a[i]<<endl;
