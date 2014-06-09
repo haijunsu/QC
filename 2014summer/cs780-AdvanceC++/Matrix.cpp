@@ -22,80 +22,80 @@ ostream& operator<<(ostream& os, SafeMatrix<T> s);
 template <class T>
 class SA {
     private:
-   	 int low, high;
-   	 T* p;
+		int low, high;
+		T* p;
     public:
-    // default constructor
-    // allows for writing things like SA a;
-    SA() {
-   	 low=0;
-   	 high=-1;
-   	 p=NULL;
-    }
-    // 2 parameter constructor lets us write
-    // SA x(10,20);
-    SA(int l, int h){
-   	 if((h-l+1)<=0) {
-   		 cout << "constructor error in bounds definition" << endl;
-   		 exit(1);
-   	 }
-   	 low=l;
-   	 high=h;
-   	 p=new T[h-l+1];
-    }
-    // single parameter constructor lets us
-    // create a SA almost like a "standard" one by writing
-    // SA x(10); and getting an array x indexed from 0 to 9
-    SA(int i) {
-   	 low=0;
-   	 high=i-1;
-   	 p=new T[i];
-    }
-    // copy constructor for pass by value and
-    // initialization
-    SA(const SA & s){
-   	 int size=s.high-s.low+1;
-   	 p=new T[size];
-   	 for(int i=0; i<size; i++)
-   		 p[i]=s.p[i];
-   	 low=s.low;
-   	 high=s.high;
-    }
-    // destructor
-    ~SA(){
-   	 delete [] p;
-    }
-    //overloaded [] lets us write
-    //SA x(10,20); x[15]= 100;
-    T& operator[](int i){
-   	 if(i<low || i>high){
-   		 cout<< "index "<<i<<" out of range"<<endl;
-   		 exit(1);
-   	 }
-   	 return p[i-low];
-    }
-    // overloaded assignment lets us assign
-    // one SA to another
-    SA & operator=(const SA & s){
-   	 if(this==&s)return *this;
-   	 delete [] p;
-   	 int size=s.high-s.low+1;
-   	 p=new T[size];
-   	 for(int i=0; i<size; i++)
-   	 p[i]=s.p[i];
-   	 low=s.low;
-   	 high=s.high;
-   	 return *this;
-    }
-    // overloads << so we can directly print SAs
-    friend ostream& operator<< <T>(ostream& os, SA<T> s);
+		// default constructor
+		// allows for writing things like SA a;
+		SA() {
+			low=0;
+			high=-1;
+			p=NULL;
+		}
+		// 2 parameter constructor lets us write
+		// SA x(10,20);
+		SA(int l, int h){
+			if((h-l+1)<=0) {
+				cout << "constructor error in bounds definition" << endl;
+				exit(1);
+			}
+			low=l;
+			high=h;
+			p=new T[h-l+1];
+		}
+		// single parameter constructor lets us
+		// create a SA almost like a "standard" one by writing
+		// SA x(10); and getting an array x indexed from 0 to 9
+		SA(int i) {
+			low=0;
+			high=i-1;
+			p=new T[i];
+		}
+		// copy constructor for pass by value and
+		// initialization
+		SA(const SA & s){
+			int size=s.high-s.low+1;
+			p=new T[size];
+			for(int i=0; i<size; i++)
+				p[i]=s.p[i];
+			low=s.low;
+			high=s.high;
+		}
+		// destructor
+		~SA(){
+			delete [] p;
+		}
+		//overloaded [] lets us write
+		//SA x(10,20); x[15]= 100;
+		T& operator[](int i){
+			if(i<low || i>high){
+				cout<< "index "<<i<<" out of range"<<endl;
+				exit(1);
+			}
+			return p[i-low];
+		}
+		// overloaded assignment lets us assign
+		// one SA to another
+		SA & operator=(const SA & s){
+			if(this==&s)return *this;
+			delete [] p;
+			int size=s.high-s.low+1;
+			p=new T[size];
+			for(int i=0; i<size; i++)
+				p[i]=s.p[i];
+			low=s.low;
+			high=s.high;
+			return *this;
+		}
+		// overloads << so we can directly print SAs
+		friend ostream& operator<< <T>(ostream& os, SA<T> s);
 };
 
 template <class T>
 ostream& operator<<(ostream& os, SA<T> s){
     int size=s.high-s.low+1;
     for(int i=0; i<size; i++)
-   	 cout<<s.p[i]<<endl;
+		os<<s.p[i]<<endl;
     return os;
 };
 
@@ -121,7 +121,6 @@ class SafeMatrix {
     }
     // 2 parameter constructor lets us write
     // SafeMatrix x(10,20);
-
     SafeMatrix(int r, int c){
 		row_low = 0;
 		row_high = r-1;
@@ -233,6 +232,7 @@ ostream& operator<<(ostream& os, SafeMatrix<T> s){
     return os;
 };
 
+// Build basic SafeMatrix from tokens
 SafeMatrix<int> getSM(vector<int> tokens) {
 	if(tokens.size() == 1){
 		SafeMatrix<int> sm1(tokens.at(0));
@@ -247,6 +247,7 @@ SafeMatrix<int> getSM(vector<int> tokens) {
 	return NULL;
 }
 
+// build SafeMatrix and fill with values
 SafeMatrix<int> buildSM(vector<int> values1, vector<int> values2) {
 	SafeMatrix<int> sm1 = getSM(values1);
 	
@@ -278,6 +279,7 @@ SafeMatrix<int> buildSM(vector<int> values1, vector<int> values2) {
 	return sm1;
 }
 
+// split words by space
 vector<int> splitLine(string line) {
 	string buf; 
 	stringstream ss(line);
@@ -302,7 +304,6 @@ int main(int argc, char* argv[]){
 	input >> noskipws; //the noskipws flag allows for whitespace characters to be extracted
     string line;
 	while (getline(input, line)){
-		//cout << line << endl;
 		vector<int> values1 = splitLine(line);
 		getline(input, line);
 		vector<int> values2 = splitLine(line);
@@ -313,76 +314,23 @@ int main(int argc, char* argv[]){
 		vector<int> values4 = splitLine(line);
 		SafeMatrix<int> sm2 = buildSM(values3, values4);
 		output << "Matrix 1 :" << endl;
-		output << sm1 << endl;
+		output << sm1;
 		output << "Matrix 2 :" << endl;
-		output << sm2 << endl;
+		output << sm2;
 		output << "Matrix 1 * Matrix 2 :" <<endl;
 		try {
 			SafeMatrix<int> sm3 = sm1 * sm2;
-			output << sm3 << endl;
+			output << sm3;
 		} catch (int e) {
 			output << "IMPOSSIBLE" << endl;
 		}
-/*		if (!sm3) {
-			output << "IMPOSSIBLE" << endl;
-		} else {
-			output << sm3 << endl;
-		} */
 		output << endl;
 	}
 
 	output << endl;
-	/*
-	SafeMatrix<int> sm(2, 2);
-	sm(0,0) = 1;
-	sm(0,1) = 2;
-	sm(1,0) = 3;
-	sm(1,1) = 4;
-	output << sm;
 	input.close();
 	output << flush;
 	output.close();
-
-	//string str("Split me by whitespaces");
-    string buf; // Have a buffer string
-    stringstream ss(line); // Insert the string into a stream
-
-    vector<string> tokens; // Create vector to hold our words
-
-    while (ss >> buf) {
-        tokens.push_back(buf);
-		cout<<buf << " ";
-	}
-
-	
-
-	cout << "sm:" << endl;
-	SafeMatrix<int> sm(2, 2);
-	sm(0,0) = 1;
-	sm(0,1) = 2;
-	sm(1,0) = 3;
-	sm(1,1) = 4;
-	cout << sm << endl;
-	SafeMatrix<int> sm2 = sm;
-	sm(0,0) = 5;
-	cout << "sm (modified):" << endl;
-	cout << sm << endl;
-	sm2(1,0)=6;
-	cout << "sm2:" << endl;
-	cout << sm2 << endl;
-
-    SafeMatrix<int> sm3(1, 2, 1, 3);
-	cout << "sm3:" << endl;
-	sm3(2,3) = 5;
-	sm3(2,2) = 1;
-	sm3(2,1) = 2;
-	sm3(1,3) = 6;
-	sm3(1,2) = 3;
-	sm3(1,1) = 4;
-	cout << sm3 << endl;
-	
-	cout << sm2 * sm3 << endl;
-*/
     return 0;
 }
 
