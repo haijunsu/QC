@@ -137,7 +137,7 @@ class SafeMatrix {
 	// 4 parameter constructor lets us write
     // SafeMatrix x(10,20,10,20);
     SafeMatrix(int r_l, int r_h, int c_l, int c_h){
-		if (r_h <= r_l || c_h <= c_l) {
+		if (r_h + 1 <= r_l || c_h + 1 <= c_l) {
 			cout << "constructor error in bounds definition" << endl;
 			throw 200;
 		}
