@@ -5,6 +5,8 @@
 #include <sstream>
 #include <vector>
 
+// CS381/780 Project 4 Submission: Su, Haijun
+
 using namespace std;
 
 template <class T> // forward declaration
