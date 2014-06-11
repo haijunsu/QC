@@ -5,7 +5,11 @@
 #include <sstream>
 #include <vector>
 
-using namespace std; 
+// CS381/780 Project 5 Submission: Su, Haijun
+
+using namespace std;
+
+// convert int to string 
 string intToString (int a)
 {
     ostringstream temp;
@@ -13,6 +17,7 @@ string intToString (int a)
     return temp.str();
 }
 
+// pair value object.
 class Pair {
 	public:
 		int coe, exp;
@@ -46,6 +51,7 @@ class Pair {
 			return *this;
 		}
 		
+		// print pair as string
 		string toString() {
 			return intToString(coe) + " " + intToString(exp);
 		}
@@ -53,11 +59,13 @@ class Pair {
 		friend ostream& operator<< (ostream& os, Pair pair);
 };
 
+// print pair to ostream
 ostream& operator<<(ostream& os, Pair pair){
 	os<< pair.coe << " " << pair.exp;
     return os;
 };
 
+// linked node provided in class
 template<class T> 
 class node{ 
 	private: 
@@ -69,7 +77,8 @@ class node{
 		T& data(){return Data;} 
 		node* & link(){return Link;} 
 }; 
- 
+
+// deep print node 
 template<class T> 
 void print_list(node<T>* p){ 
 	while(p){ 
@@ -78,7 +87,8 @@ void print_list(node<T>* p){
 	} 
 	cout<<endl; 
 } 
- 
+
+// an example to make an int list  
 node<int>* make_int_list(int n){ 
 	if(n<=0) return 0; 
 
@@ -92,14 +102,12 @@ node<int>* make_int_list(int n){
 	return first; 
 } 
 
-// create node list from int tokens
+// create canonical list from int tokens, it is the core of polynomial
 node<Pair>* make_canonical_list(vector<int> tokens){ 
 	if(tokens.size()<=1) return 0; // at least 2 elements
 
 	node<Pair>* first,*p,*q,*tmp; 
-	if (tokens.at(0) == 0) {
-		tokens.at(1) = 0;
-	} 
+
 	Pair pair(tokens.at(0), tokens.at(1));
 	first=p=new node<Pair>(pair); 
 	for(int i=2; i<tokens.size(); ){
@@ -114,9 +122,6 @@ node<Pair>* make_canonical_list(vector<int> tokens){
 		} while (p=p->link());
 		// insert node in the list
 		if (merged == 0) { // add new node
-			if (tokens.at(i) == 0) {
-				tokens.at(i + 1) = 0;
-			} 
 			Pair pair(tokens.at(i), tokens.at(i + 1));
 			q=new node<Pair>(pair); 
 			// insert new node
@@ -143,12 +148,21 @@ node<Pair>* make_canonical_list(vector<int> tokens){
 				}
 			}
 		}
+
 		p = first;//move p to first
 		i += 2;
 	} 
+	// fix exp value if coe is zero
+	p=first; 
+	do {
+		if (p->data().coe == 0) {
+			p->data().exp = 0;
+		}
+	} while (p = p->link());
 	return first; 
 } 
 
+// an example to print node recursively
 template<class T> 
 void print_list_rec(node<T>* p){ 
 	if(p==0) return; 
@@ -156,7 +170,8 @@ void print_list_rec(node<T>* p){
 	print_list_rec( p->link()); 
 
 } 
- 
+
+// join to nodes 
 template<class T> 
 void add_at_end(node<T>* &first, node<T>*r){ 
 	node<T>* p; 
@@ -168,6 +183,7 @@ void add_at_end(node<T>* &first, node<T>*r){
 
 } 
 
+//print node as string
 template<class T> 
 string getNodePairString(node<T> p) {
 	node<T> q = p;
@@ -182,6 +198,9 @@ string getNodePairString(node<T> p) {
 			rtn += q1->data().toString() + " "; 
 		}
 		q = *q1;
+	}
+	if (rtn == "") { 
+		rtn = "0 0"; //assume p is not null. return one pair
 	}
 	q1 = NULL;
 	return rtn;
@@ -198,6 +217,7 @@ vector<int> splitLine(string line) {
 	return tokens;
 } 
 
+// main class
 class Polynomial {
 	private:
 		string original;
@@ -279,6 +299,7 @@ class Polynomial {
 			Polynomial plnm2 = polynomial;
 			p1 = plnm1.p;
 			p2 = p3 = plnm2.p;
+			// change sign of coe
 			p3->data().coe = 0 - p3->data().coe;
 			while (p3 = p3->link()) {
 				p3->data().coe = 0 - p3->data().coe;
@@ -297,11 +318,11 @@ class Polynomial {
 			Polynomial plnm2 = polynomial;
 			p1 = plnm1.p;
 			p2 = p3 = plnm2.p;
-			int coe = p1->data().coe * p3->data().coe;
-			int exp = p1->data().exp + p3->data().exp;
+			int coe = p1->data().coe * p3->data().coe; // coe multiple coe
+			int exp = p1->data().exp + p3->data().exp; // exp add exp
 			Pair pair(coe, exp);
-			p4 = p5 = new node<Pair>(pair);
-			while (p3 = p3->link()) {
+			p4 = p5 = new node<Pair>(pair); // product node
+			while (p3 = p3->link()) { // multiple with all other nodes of plnm2.
 				coe = p1->data().coe * p3->data().coe;
 				exp = p1->data().exp + p3->data().exp;
 				Pair pair(coe, exp);
@@ -309,8 +330,8 @@ class Polynomial {
 				p5->link() = p6;
 				p5 = p6;
 			}
-			p3 = p2;
-			while(p1=p1->link()) {
+			p3 = p2; // move p3 to first
+			while(p1=p1->link()) { // multiple all other nodes of plnm1 and plnm2
 				do {
 					coe = p1->data().coe * p3->data().coe;
 					exp = p1->data().exp + p3->data().exp;
@@ -327,19 +348,21 @@ class Polynomial {
 			return plnm;
 		}
 		
+		// Canonical string
 		string getCanonical() {
 			return getNodePairString(*p);
 		}
 		
+		// Original string
 		string getOriginal() {
 			return original;
 		}
 		
-		// overloads << so we can directly print Pairs
+		// overloads << so we can directly print Polynomial
 		friend ostream& operator<< (ostream& os, Polynomial polynomial);
 };
 
-
+// print polynomial
 ostream& operator<< (ostream& os, Polynomial polynomial){
 	os<< "original: " << polynomial.original << endl;
 	os<< "canonical: ";
@@ -374,13 +397,13 @@ int main(int argc, char* argv[]){
 		output<< "canonical 1: " << plnm1.getCanonical() << endl;
 		output<< "canonical 2: " << plnm2.getCanonical() << endl;
 		Polynomial plnm3 = plnm1 + plnm2;
-		output<< "original sum: " << plnm3.getOriginal() << endl;
+		//output<< "original sum: " << plnm3.getOriginal() << endl;
 		output<< "sum: " << plnm3.getCanonical() << endl;
 		Polynomial plnm4 = plnm1 - plnm2;
-		output<< "original difference: " << plnm4.getOriginal() << endl;
+		//output<< "original difference: " << plnm4.getOriginal() << endl;
 		output<< "difference: " << plnm4.getCanonical() << endl;
 		Polynomial plnm5 = plnm1 * plnm2;
-		output<< "original product: " << plnm5.getOriginal() << endl;
+		//output<< "original product: " << plnm5.getOriginal() << endl;
 		output<< "product: " << plnm5.getCanonical() << endl << endl;
 	}
 
