@@ -170,8 +170,9 @@ string getNodePairString(node<T> p) {
 	while(q.link()) {
 		q1 = q.link();
 		rtn += q1->data().toString() + " "; 
+		q = *q1;
 	}
-	delete q1;
+	q1 = 0;
 	return rtn;
 }
 
@@ -256,8 +257,8 @@ class Polynomial {
 			add_at_end(p1, p2);
 			string values = getNodePairString(*p1);
 			Polynomial plnm(values);
-			delete p1;
-			delete p2;
+			p1 = 0;
+			p2 = 0;
 			return plnm;
 		}
 		// overloaded assignment lets us assign
@@ -275,9 +276,9 @@ class Polynomial {
 			add_at_end(p1, p2);
 			string values = getNodePairString(*p1);
 			Polynomial plnm(values);
-			delete p1;
-			delete p2;
-			delete p3;
+			p1 = 0;
+			p2 = 0;
+			p3 = 0;
 			return plnm;
 		}
 		// overloaded assignment lets us assign
@@ -314,12 +315,12 @@ class Polynomial {
 			}
 			string values = getNodePairString(*p4);
 			Polynomial plnm(values);
-			delete p1;
-			delete p2;
-			delete p3;
-			delete p4;
-			delete p5;
-			delete p6;
+			p1 = 0;
+			p2 = 0;
+			p3 = 0;
+			p4 = 0;
+			p5 = 0;
+			p6 = 0;
 			return plnm;
 		}
 		
@@ -362,8 +363,22 @@ int main(int argc, char* argv[]){
 	input >> noskipws; //the noskipws flag allows for whitespace characters to be extracted
     string line;
 	while (getline(input, line)){
-		Polynomial plnm(line);
-		output<< plnm << endl;
+		Polynomial plnm1(line);
+		getline(input, line);
+		Polynomial plnm2(line);
+		output<< "original 1: " << plnm1.getOriginal() << endl;
+		output<< "original 2: " << plnm2.getOriginal() << endl;
+		output<< "canonical 1: " << plnm1.getCanonical() << endl;
+		output<< "canonical 2: " << plnm2.getCanonical() << endl;
+		Polynomial plnm3 = plnm1 + plnm2;
+		output<< "original sum: " << plnm3.getOriginal() << endl;
+		output<< "sum: " << plnm3.getCanonical() << endl;
+		Polynomial plnm4 = plnm1 - plnm2;
+		output<< "original difference: " << plnm4.getOriginal() << endl;
+		output<< "difference: " << plnm4.getCanonical() << endl;
+		Polynomial plnm5 = plnm1 * plnm2;
+		output<< "original product: " << plnm5.getOriginal() << endl;
+		output<< "product: " << plnm5.getCanonical() << endl;
 	}
 
 	output << endl;
