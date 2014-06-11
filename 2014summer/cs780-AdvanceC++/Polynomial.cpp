@@ -97,6 +97,9 @@ node<Pair>* make_canonical_list(vector<int> tokens){
 	if(tokens.size()<=1) return 0; // at least 2 elements
 
 	node<Pair>* first,*p,*q,*tmp; 
+	if (tokens.at(0) == 0) {
+		tokens.at(1) = 0;
+	} 
 	Pair pair(tokens.at(0), tokens.at(1));
 	first=p=new node<Pair>(pair); 
 	for(int i=2; i<tokens.size(); ){
@@ -111,6 +114,9 @@ node<Pair>* make_canonical_list(vector<int> tokens){
 		} while (p=p->link());
 		// insert node in the list
 		if (merged == 0) { // add new node
+			if (tokens.at(i) == 0) {
+				tokens.at(i + 1) = 0;
+			} 
 			Pair pair(tokens.at(i), tokens.at(i + 1));
 			q=new node<Pair>(pair); 
 			// insert new node
@@ -132,7 +138,7 @@ node<Pair>* make_canonical_list(vector<int> tokens){
 					}
 					tmp = p;	
 				}
-				if (added = 0) { // add to end
+				if (added == 0) { // add to end
 					p->link() = q;
 				}
 			}
@@ -166,13 +172,18 @@ template<class T>
 string getNodePairString(node<T> p) {
 	node<T> q = p;
 	node<T> *q1;
-	string rtn = q.data().toString() + " "; 
+	string rtn = "";
+	if (q.data().coe != 0 || q.link() == 0) {
+		rtn += q.data().toString() + " "; 
+	}
 	while(q.link()) {
 		q1 = q.link();
-		rtn += q1->data().toString() + " "; 
+		if (q1->data().coe != 0) { 
+			rtn += q1->data().toString() + " "; 
+		}
 		q = *q1;
 	}
-	q1 = 0;
+	q1 = NULL;
 	return rtn;
 }
 
@@ -220,7 +231,7 @@ class Polynomial {
 				tmp->link() = q;
 				tmp = q;
 			}
-			p1 = q = tmp = 0;
+			p1 = q = tmp = NULL;
 		}
 		// destructor
 		~Polynomial(){
@@ -246,7 +257,7 @@ class Polynomial {
 			p1 = q = tmp = 0;			
 			return *this;
 		}
-		// overloaded assignment lets us assign
+		// overloaded add
 		// one Polynomial to another
 		Polynomial operator+(const Polynomial & polynomial){
 			node<Pair> * p1, *p2;
@@ -257,11 +268,10 @@ class Polynomial {
 			add_at_end(p1, p2);
 			string values = getNodePairString(*p1);
 			Polynomial plnm(values);
-			p1 = 0;
-			p2 = 0;
+			p1 = p2 = NULL;
 			return plnm;
 		}
-		// overloaded assignment lets us assign
+		// overloaded difference
 		// one Polynomial to another
 		Polynomial operator-(const Polynomial & polynomial){
 			node<Pair> * p1, *p2, *p3;
@@ -276,12 +286,10 @@ class Polynomial {
 			add_at_end(p1, p2);
 			string values = getNodePairString(*p1);
 			Polynomial plnm(values);
-			p1 = 0;
-			p2 = 0;
-			p3 = 0;
+			p1 = p2 = p3 = NULL;
 			return plnm;
 		}
-		// overloaded assignment lets us assign
+		// overloaded product
 		// one Polynomial to another
 		Polynomial operator*(const Polynomial & polynomial){
 			node<Pair> * p1, *p2, *p3, *p4, *p5, * p6;
@@ -315,12 +323,7 @@ class Polynomial {
 			}
 			string values = getNodePairString(*p4);
 			Polynomial plnm(values);
-			p1 = 0;
-			p2 = 0;
-			p3 = 0;
-			p4 = 0;
-			p5 = 0;
-			p6 = 0;
+			p1 = p2 = p3 = p4 = p5 = p6 = NULL;
 			return plnm;
 		}
 		
@@ -378,7 +381,7 @@ int main(int argc, char* argv[]){
 		output<< "difference: " << plnm4.getCanonical() << endl;
 		Polynomial plnm5 = plnm1 * plnm2;
 		output<< "original product: " << plnm5.getOriginal() << endl;
-		output<< "product: " << plnm5.getCanonical() << endl;
+		output<< "product: " << plnm5.getCanonical() << endl << endl;
 	}
 
 	output << endl;
