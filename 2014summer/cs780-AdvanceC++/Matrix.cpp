@@ -115,7 +115,7 @@ class SafeMatrix {
 		row_high = -1;
 		col_low = -1;
 		col_high = -1;
-		p = NULL;
+		//p = NULL;
     }    
     // 1 parameter constructor lets us write
     // SafeMatrix x(10);
@@ -164,9 +164,9 @@ class SafeMatrix {
     // destructor
     ~SafeMatrix(){
 		for (int i=row_low; i<=row_high; i++) {
-			p[i] = NULL;
+			//p[i] = NULL;
 		}
-		p = NULL;
+		//p = NULL;
     }
     //overloaded () lets us write
     //SafeMatrix x(10,20)
@@ -218,9 +218,9 @@ class SafeMatrix {
 			for (int j = product.col_low; j <= product.col_high; j++) {
 				for (int k=0; k<=col_high-col_low; k++) {
 					if (k == 0) {
-						product(i, j) = p[i][k + col_low] * s.p[k + s.row_low][j];
+						product.p[i][j] = p[i][k + col_low] * s.p[k + s.row_low][j];
 					} else {
-						product(i, j) += p[i][k + col_low] * s.p[k + s.row_low][j];
+						product.p[i][j] += p[i][k + col_low] * s.p[k + s.row_low][j];
 					}
 				}
 			}
@@ -255,7 +255,8 @@ SafeMatrix<int> getSM(vector<int> tokens) {
 		SafeMatrix<int> sm4(tokens.at(0), tokens.at(1), tokens.at(2), tokens.at(3));
 		return sm4;
 	}
-	return NULL;
+	SafeMatrix<int> sm1(0);
+	return sm1;
 }
 
 // build SafeMatrix and fill with values
