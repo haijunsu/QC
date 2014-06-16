@@ -107,7 +107,16 @@ class SafeMatrix {
 		int row_low, row_high, col_low, col_high;
 		SA<SA<T> > p;
     public:
-    
+
+    // 1 parameter constructor lets us write
+    // SafeMatrix x();
+    SafeMatrix(){
+		row_low = -1;
+		row_high = -1;
+		col_low = -1;
+		col_high = -1;
+		p = NULL;
+    }    
     // 1 parameter constructor lets us write
     // SafeMatrix x(10);
     SafeMatrix(int dim){
@@ -291,7 +300,7 @@ vector<int> splitLine(string line) {
 	}
 	return tokens;
 }
-
+/*
 int main(int argc, char* argv[]){
  
 	if (argc < 3) { //first argument(argv[0]) is the program path
@@ -335,4 +344,5 @@ int main(int argc, char* argv[]){
 	output.close();
     return 0;
 }
+*/
 
