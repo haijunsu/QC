@@ -164,9 +164,9 @@ class SafeMatrix {
     // destructor
     ~SafeMatrix(){
 		for (int i=row_low; i<=row_high; i++) {
-			//p[i] = NULL;
+			p[i].~SA();
 		}
-		//p = NULL;
+		p.~SA();
     }
     //overloaded () lets us write
     //SafeMatrix x(10,20)
@@ -301,7 +301,7 @@ vector<int> splitLine(string line) {
 	}
 	return tokens;
 }
-/*
+
 int main(int argc, char* argv[]){
  
 	if (argc < 3) { //first argument(argv[0]) is the program path
@@ -345,5 +345,5 @@ int main(int argc, char* argv[]){
 	output.close();
     return 0;
 }
-*/
+
 
