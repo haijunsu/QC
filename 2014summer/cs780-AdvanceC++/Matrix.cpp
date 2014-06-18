@@ -164,9 +164,9 @@ class SafeMatrix {
     // destructor
     ~SafeMatrix(){
 		for (int i=row_low; i<=row_high; i++) {
-			p[i].~SA();
+			//p[i].~SA();
 		}
-		p.~SA();
+		//p.~SA();
     }
     //overloaded () lets us write
     //SafeMatrix x(10,20)
