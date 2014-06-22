@@ -22,7 +22,6 @@ vector<int> splitLine(string &line) {
 	}
 	return tokens;
 }
-
 // print map
 void printMap(ostream& os, map<int,int> &m) {
 	map<int,int>:: reverse_iterator p;
@@ -35,6 +34,113 @@ void printMap(ostream& os, map<int,int> &m) {
 	}
 	os << endl;
 }
+// fill values into map
+void fillMap(map<int, int> &m, vector<int> &values) {
+	for(int i=0;i<values.size();){ 
+		int k = values.at(i+1);
+		int v = values.at(i);
+		m[k]+=v; 
+		if(m[k]==0) {
+			// erase k
+			m.erase(k);
+		}
+		i+= 2;
+	}
+}
+
+// Polynomial class
+class Polynomial {
+	private:
+		map<int, int> poly;
+	public:
+		// default constructor
+		Polynomial() {
+			//nop
+		}
+		// 1 parameter constructor lets us write
+		// Polynomial x("10 20");
+		Polynomial(string equation) {
+			vector<int> tokens = splitLine(equation);
+			fillMap(poly, tokens);
+		}
+
+		// copy constructor for pass by value and
+		// initialization
+		Polynomial(const Polynomial & polynomial){
+			poly = polynomial.poly;
+		}		
+		// destructor
+		~Polynomial(){
+			// nop
+		}
+		// overloaded assignment lets us assign
+		// one Polynomial to another
+		Polynomial & operator=(const Polynomial & polynomial){
+			if(this==&polynomial)return *this;
+			poly = polynomial.poly;
+			return *this;
+		}		
+		// overloaded add
+		// one Polynomial to another
+		Polynomial operator+(const Polynomial & polynomial){
+			Polynomial plnm = *this;
+			map<int,int> poly2 = polynomial.poly;
+			// now "add poly2 to sum 
+			map<int,int>:: reverse_iterator pp;
+			for(pp=poly2.rbegin();pp!=poly2.rend();pp++) {
+				plnm.poly[pp->first]+=pp->second; 
+				if(plnm.poly[pp->first]==0) 
+					plnm.poly.erase(pp->first); 
+			}			
+			return plnm;
+		}
+
+		// overloaded difference
+		// one Polynomial to another
+		Polynomial operator-(const Polynomial & polynomial){
+			Polynomial plnm = *this;
+			map<int,int> poly2 = polynomial.poly;
+			// now "subtract poly2 to difference
+			map<int,int>:: reverse_iterator pp;
+			for(pp=poly2.rbegin();pp!=poly2.rend();pp++) {
+				plnm.poly[pp->first]-=pp->second; 
+				if(plnm.poly[pp->first]==0) 
+					(plnm.poly).erase(pp->first); 
+			}		
+			return plnm;
+		}
+
+		// overloaded product
+		// one Polynomial to another
+		Polynomial operator*(const Polynomial & polynomial){
+			map<int, int> product;
+			map<int,int> poly2 = polynomial.poly;
+			map<int,int>:: reverse_iterator pp1, pp2;
+			// now "multiple poly2 to product
+			for(pp1=poly.rbegin();pp1!=poly.rend();pp1++) {
+				for(pp2=poly2.rbegin();pp2!=poly2.rend();pp2++) {
+					int k = pp1->first + pp2->first;
+					int v = pp1->second * pp2->second;
+					product[k]+=v; 
+					if(product[k]==0) 
+						product.erase(k); 
+				}
+			}
+			Polynomial plnm;
+			plnm.poly = product;
+			return plnm;
+		
+		}
+
+		// overloads << so we can directly print Polynomial
+		friend ostream& operator<< (ostream& os, Polynomial& polynomial);
+};
+// print polynomial
+ostream& operator<< (ostream& os, Polynomial &polynomial){
+	printMap(os, polynomial.poly);
+    return os;
+};
+
 
 int main(int argc, char *argv[]) 
 { 
@@ -50,102 +156,39 @@ int main(int argc, char *argv[])
 	input >> noskipws; //the noskipws flag allows for whitespace characters to be extracted
     string line;
 	while (getline(input, line)){
-		vector<int> values1 = splitLine(line);
 		cout << "original 1: " << line <<endl;
 		output << "original 1: " << line <<endl;
+		Polynomial poly1(line);
 		getline(input, line);
 		cout << "original 2: " << line <<endl;
 		output << "original 2: " << line <<endl;
-		vector<int> values2 = splitLine(line);
-
-		map<int,int> poly1,poly2,sum, difference, product; 
-
-		
-		// this will read the first polynomial, and automatically keep in in "reverese cannonical form" 
-
-		for(int i=0;i<values1.size();){ 
-			int k = values1.at(i+1);
-			int v = values1.at(i);
-			poly1[k]+=v; 
-			if(poly1[k]==0) {
-				// erase k
-				poly1.erase(k);
-			}
-			i+= 2;
-		}
+		Polynomial poly2(line);
 		
 		// print it in cannonical form 
-		cout<<"canonical 1: "; 
-		output<<"canonical 1: "; 
+		cout<<"canonical 1: " << poly1; 
+		output<<"canonical 1: "<< poly1;
+		cout<<"canonical 2: "<< poly2;
+		output<<"canonical 2: "<< poly2;
 
-		printMap(output, poly1);
-		printMap(cout, poly1);
-	
-		for(int i=0;i<values2.size();){ 
-			int k = values2.at(i+1);
-			int v = values2.at(i);
-			poly2[k]+=v; 
-			if(poly2[k]==0) 
-				poly2.erase(k);
-			i+= 2;
-		} 
-		// this was the second polynomial 
-		cout<<"canonical 2: "; 
-		output<<"canonical 2: ";
-		
-		printMap(output, poly2);
-		printMap(cout, poly2);
-	
-		map<int,int>:: reverse_iterator p, p2;
-		sum=poly1; 
-
-		// now "add poly2 to sum 
-		for(p=poly2.rbegin();p!=poly2.rend();p++) {
-			sum[p->first]+=p->second; 
-			if(sum[p->first]==0) 
-				sum.erase(p->first); 
-		} 
-		// erase zero
-		//if (sum.size() > 1)
-		//	sum.erase(sum.find(0));
 		cout<<"sum: "; 
 		output<<"sum: "; 
-		
-		printMap(output, sum);
-		printMap(cout, sum);
+		Polynomial sum = poly1 + poly2;
+		cout << sum;
+		output << sum;
 
-		difference=poly1; 
-
-		// now "subtract poly2 to difference
-		for(p=poly2.rbegin();p!=poly2.rend();p++) {
-			difference[p->first]-=p->second; 
-			if(difference[p->first]==0) 
-				difference.erase(p->first); 
-		} 
 
 		cout<<"difference: "; 
 		output<<"difference: "; 
+		Polynomial difference = poly1 - poly2;
+		cout << difference;
+		output << difference;
 
-		printMap(output, difference);
-		printMap(cout, difference);
-
-		//product=poly1; 
-
-		// now "multiple poly2 to product
-		for(p=poly1.rbegin();p!=poly1.rend();p++) {
-			for(p2=poly2.rbegin();p2!=poly2.rend();p2++) {
-				int k = p->first + p2->first;
-				int v = p->second * p2->second;
-				product[k]+=v; 
-				if(product[k]==0) 
-					product.erase(k); 
-			}
-		} 
 		cout<<"product: "; 
 		output<<"product: "; 
+		Polynomial product = poly1 * poly2;
+		cout << product;
+		output << product;
 
-		printMap(output, product);
-		printMap(cout, product);
 		cout<<endl; 
 		output<<endl; 
 
