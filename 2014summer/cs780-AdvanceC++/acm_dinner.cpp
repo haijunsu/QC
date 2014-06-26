@@ -1,4 +1,4 @@
-// ACM dinner Using the STL next_permutation algorithm 
+// ACM dinner Using the STL algorithm 
  
 #include <iostream> 
 #include <string> 
@@ -13,10 +13,18 @@ using namespace std;
 
 // CS381/780 Project 7 Submission: Su, Haijun
 
+// My project can count 11 teams in reasonable time.
+// Usage: <program> - default to count 9 teams without detail results
+//        <program> <number> - count assigned number teams without detail results
+//        <program> <number> <1> - count assigned number teams with detail results
+
+// switch to show all results
 bool show_detail = 0;
 
+// used by std:max_element
 bool myfn(int i, int j) { return abs(i)<abs(j); }
 
+// get all possible members for next position
 vector<int> getNextMembers(vector<int> &mm, int pos, int n) {
 	vector<int> vm;
 	if (pos > n) return vm;
@@ -37,6 +45,7 @@ vector<int> getNextMembers(vector<int> &mm, int pos, int n) {
 	return vm;
 } 
 
+// combine all possible results
 int combineGrp(vector<vector<int> > total, int pos, int n, int count, vector<vector<int> > &data) {
 	for (vector<vector<int> >::iterator it0 = total.begin(); it0 != total.end(); ++it0) {
 		vector<int> nextMembers = getNextMembers(*it0, pos, n);
@@ -44,9 +53,9 @@ int combineGrp(vector<vector<int> > total, int pos, int n, int count, vector<vec
 			vector<vector<int> > subtotal;
 			for (vector<vector<int> >::iterator it2 = total.begin(); it2 != total.end(); ++it2) {
 				vector<int> tmp(*it2);
-				if (tmp.back() == -(*it)) continue; 
+				if (tmp.back() == -(*it)) continue; // same team
 				tmp.push_back(*it);
-				if ((pos == n) && (tmp.back() != -1)) {
+				if ((pos == n) && (tmp.back() != -1)) { // -1 is the first team member.
 					++count;
 					if (show_detail)
 						data.push_back(tmp);
