@@ -13,77 +13,52 @@ using namespace std;
 
 // CS381/780 Project 7 Submission: Su, Haijun
 
-// split words by space
-vector<int> splitLine(string &line) {
-	string buf; 
-	stringstream ss(line);
-	vector<int> tokens;
-	while (ss >> buf) {
-		tokens.push_back(atoi(buf.c_str()));
+bool show_detail = 0;
+
+bool myfn(int i, int j) { return abs(i)<abs(j); }
+
+vector<int> getNextMembers(vector<int> &mm, int pos, int n) {
+	vector<int> vm;
+	if (pos > n) return vm;
+	int max_grp = abs(*std::max_element(mm.begin(),mm.end(),myfn));
+	if (max_grp < n/2) ++max_grp;
+	if (pos % 2 == 0) { // negative number
+		for (int i = 1; i<=max_grp; i++) {
+			vm.push_back(-i);
+		}
+	} else {
+		for (int i = 1; i<=max_grp; i++) {
+			vm.push_back(i);
+		}
 	}
-	return tokens;
-}
-
-// get value base on the position of the member
-// ex. {0, 1, 2, 3, 4, 5} => {+1, -1, +2, -2, +3, -3}
-//     getValue(3) => -2
-int getValue(int i) {
-	if (i%2 != 0) return -((i/2) + 1); //female
-	return i/2+1; //male
-}
-
-// print solution
-void print(int* q, int n, int c){ 
-	cout<<"Solution # "<<c<<": "; 
-	for(int i=0; i<n; i++) {
-		int value = getValue(q[i]);
-		if (value > 0) cout << "+" << value << " ";
-		else cout<<value<<" "; 
+	for(vector<int>::iterator it = mm.begin(); it != mm.end(); ++it) {
+		vm.erase(std::remove(vm.begin(), vm.end(), *it), vm.end());
 	}
-	cout<<endl; 
-	return; 
-}
+	return vm;
+} 
 
-
-// whether the array is satisfied.
-bool ok(int* q, int n){ 
-	if (n < 5) return false; // only two teams
-	if (getValue(q[0]) != 1 || getValue(q[1]) != -2 || getValue(q[2]) != 3)
-		return false; // reserve 3 seats in front
-	int max_grp = 0;
-	set<int> grp_nums;
-	grp_nums.insert(1);
-	grp_nums.insert(2);
-	grp_nums.insert(3);
-	int prev = getValue(q[1]);
-	int curr = getValue(q[2]);
-	int next = getValue(q[3]);
-	for(int i=3; i<n; i ++) { // begin at seat 4
-		prev = curr;
-		curr = next;
-		if (i==(n-1)) {
-			next = getValue(q[0]); // check the last one and the first one 
-		} else {
-			next = getValue(q[i+1]);
+int combineGrp(vector<vector<int> > total, int pos, int n, int count, vector<vector<int> > &data) {
+	for (vector<vector<int> >::iterator it0 = total.begin(); it0 != total.end(); ++it0) {
+		vector<int> nextMembers = getNextMembers(*it0, pos, n);
+		for(vector<int>::iterator it = nextMembers.begin(); it != nextMembers.end(); ++it) {
+			vector<vector<int> > subtotal;
+			for (vector<vector<int> >::iterator it2 = total.begin(); it2 != total.end(); ++it2) {
+				vector<int> tmp(*it2);
+				if (tmp.back() == -(*it)) continue; 
+				tmp.push_back(*it);
+				if ((pos == n) && (tmp.back() != -1)) {
+					++count;
+					if (show_detail)
+						data.push_back(tmp);
+				}
+				subtotal.push_back(tmp);
+			}
+			if (pos <= n)
+				count = combineGrp(subtotal, pos+1, n, count, data);
 		}
-		if(abs(curr) == abs(prev) || abs(curr) == abs(next)) // same team
-			return false;
-		if (((curr < 0 && prev < 0) && (curr > 0 && prev > 0)) 
-			|| ((curr < 0 && next < 0) || (curr > 0 && next > 0))){ // same gender
-			return false;
-		}
-		if (abs(curr) < max_grp && grp_nums.find(abs(curr)) == grp_nums.end()) {
-			// large number group sit in front of small number group
-			return false;
-		}
-		if (abs(curr) > max_grp) {
-			max_grp = abs(curr);
-		}
-		grp_nums.insert(abs(curr));
 	}
-	return true; 
-}; 
-
+	return count;
+}
 // ACM class
 class ACM {
 	private:
@@ -99,20 +74,17 @@ class ACM {
 		// ACM x(5);
 		ACM(int n) {
 			this->n = n;
+			count = 0;
+			if (n < 3) return;
 			int q[2*n]; 
-			//init team
-			for (int i=0; i<n; i++) {
-				q[2*i] = 2*i;
-				q[2*i+1] = 2*i + 1;
-			}
-			count=0; 
-			do { 
-				if(ok(q, 2*n)) {
-					++count;
-					vector<int> el(q, q + sizeof(q) / sizeof(int));
-					data.push_back(el);
-				}
-			} while ( next_permutation (q, q+2*n) ); 
+			vector<int> mm;
+			mm.push_back(1);
+			mm.push_back(-2);
+			mm.push_back(3);
+			int pos = 4;
+			vector<vector<int> > total;
+			total.push_back(mm);
+			count = combineGrp(total, pos, n*2, count, data);
 		}
 
 		// copy constructor for pass by value and
@@ -141,25 +113,30 @@ class ACM {
 // print ACM
 ostream& operator<< (ostream& os, ACM &acm){
 	os << "case " << acm.n << ": " << acm.count << endl;
-
-	int k = 0;
-	for (vector<vector<int> >::iterator it = (acm.data).begin(); it != (acm.data).end(); ++it) {
-		cout<<"Solution # "<< ++k <<": "; 
-		for(vector<int>::iterator it2 = (*it).begin(); it2 != (*it).end(); ++it2) {
-			int value = getValue(*it2);
-			if (value > 0) cout << "+" << value << " ";
-			else cout<<value<<" "; 
+	if (show_detail) {
+		int k = 0;
+		for (vector<vector<int> >::iterator it = (acm.data).begin(); it != (acm.data).end(); ++it) {
+			os<<"Solution # "<< ++k <<": "; 
+			for(vector<int>::iterator it2 = (*it).begin(); it2 != (*it).end(); ++it2) {
+				if ((*it2) > 0) os << "+" << (*it2) << " ";
+				else os<<(*it2)<<" "; 
+			}
+			os<<endl; 	
 		}
-		cout<<endl; 	
 	}
     return os;
 };
 
-int main () {
+int main (int argc, char* argv[]) {
 	int n = 9; // max team number
+	if (argc == 2) n = atoi(argv[1]);
+	if (argc == 3) {
+		n = atoi(argv[1]);
+		show_detail = atoi(argv[2]);
+	}
 	for(int m=2; m<=n; m++) { // at least 2 teams
 		ACM acm(m);
-		cout << acm << endl;
+		cout << acm;
 	}
 	//system("pause"); 
 	return 0; 
