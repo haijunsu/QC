@@ -32,7 +32,7 @@ void main(int argc, char ** argv) {
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowSize(460, 460);
 	glutInitWindowPosition(200, 100);
-	glutCreateWindow("The Hering Illusion");
+	glutCreateWindow("The Hermann Grid Illusion");
 	glClearColor(1.0, 1.0, 1.0, 0.0);
 	gluOrtho2D(0.0, 460.0, 0.0, 460.0);
 	glutDisplayFunc(display);
