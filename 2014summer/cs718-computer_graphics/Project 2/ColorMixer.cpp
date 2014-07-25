@@ -15,6 +15,7 @@ int width = 600;
 int height = 400;
 
 bool isDebug = false; // show debug information on console
+bool showAdvance = false; // show advance feature of slider (show slider area when mouse moves in)
 int rubberbanding = -1; // if rubberbanding is -1, there is no rubberbanding
 
 // print some debug information on console
@@ -67,10 +68,10 @@ class slider {
 			changeBlockColor = false;
 		}
 		// construct slider with specified values
-		slider(int low, int high, int initValue, int lineLength, int sliderColor) {
+		slider(int low, int high, int initValue, int sliderHeight, int sliderColor) {
 			lowValue = low;
 			highValue = high;
-			lineHeight = lineLength;
+			lineHeight = sliderHeight - 40; // leave spaces for label on top and bottom
 			value = initValue;
 			space = 20;
 			blockWidth = 25;
@@ -121,13 +122,16 @@ class slider {
 						rubberY = y;
 						rubberValue = value;
 					} else if (isInSide(x, y)) {
-						value = y - vLineY - blockHeight/2;
-						if (value > lineHeight) value = lineHeight;
-						if (value < 0) value = 0;
-						changeBlockColor = true;
-						rubberbanding = color; // auto attach
-						rubberY = y;
-						rubberValue = value;					}
+						if (showAdvance) { // click and jump the block to curser position
+							value = y - vLineY - blockHeight/2;
+							if (value > lineHeight) value = lineHeight;
+							if (value < 0) value = 0;
+							changeBlockColor = true;
+							rubberbanding = color; // auto attach
+							rubberY = y;
+							rubberValue = value;	
+						}
+					}
 				} else {
 					if (isRubberbanded() && rubberbanding == color) {
 						rubberbanding = -1;
@@ -142,15 +146,21 @@ class slider {
 		// handle motion
 		void motion(int x, int y) {
 			debug(getName(), "motion");
+			// motion area
 			if (isRubberbanded() && rubberbanding == color) {
-				value = rubberValue + y - rubberY;
-				if (value > lineHeight) value = lineHeight;
-				if (value < 0) value = 0;
+				if (x < (vLineX - 30) || x > (vLineX + 30)) {
+					rubberbanding = -1; // out of the slider range
+					changeBlockColor = false; // restore block's color
+				} else {
+					value = rubberValue + y - rubberY;
+					if (value > lineHeight) value = lineHeight;
+					if (value < 0) value = 0;
+				}
 			}
 		}
 
-		// handle possive
-		void possive(int x, int y) {
+		// handle passive
+		void passive(int x, int y) {
 			if (isInBlock(x, y)) {
 				changeBlockColor = true;
 			} else {
@@ -210,7 +220,7 @@ class slider {
 			blockY = vLineY + value;
 			// change block color
 			if (changeBlockColor) 
-				glColor3f(0.9, 0.9, 0.9);
+				glColor3f(0.9f, 0.9f, 0.9f);
 			glBegin(GL_QUADS);
 				glVertex2i(blockX, blockY);
 				glVertex2i(blockX + blockWidth, blockY);
@@ -218,8 +228,8 @@ class slider {
 				glVertex2i(blockX, blockY + blockHeight);
 			glEnd();
 			//draw slider outline
-			if (drawSliderOutline) {
-				glColor3f(0.2, 0.2, 0.2);
+			if (drawSliderOutline && showAdvance) {
+				glColor3f(0.2f, 0.2f, 0.2f);
 				glLineWidth(1.0);
 				glEnable(GL_LINE_STIPPLE);
 				glLineStipple(1,0x000F); 
@@ -300,9 +310,9 @@ class slider {
 };
 
 // initial sliders
-slider redSlider(0, 255, 127, 255, RED);
-slider greenSlider(0, 255, 127, 255, GREEN);
-slider blueSlider(0, 255, 127, 255, BLUE);
+slider redSlider(0, 255, 127, 300, RED);
+slider greenSlider(0, 255, 127, 300, GREEN);
+slider blueSlider(0, 255, 127, 300, BLUE);
 
 // colors for picker rectangle
 float colors[2][3];
@@ -423,12 +433,12 @@ void motion(int x, int y) {
 	glutPostRedisplay();
 }
 
-// handle possive event
-void possive(int x, int y) {
+// handle passive event
+void passive(int x, int y) {
 	int vy = getY(y);
-	redSlider.possive(x, vy);
-	greenSlider.possive(x, vy);
-	blueSlider.possive(x, vy);
+	redSlider.passive(x, vy);
+	greenSlider.passive(x, vy);
+	blueSlider.passive(x, vy);
 	glutPostRedisplay();
 }
 
@@ -459,7 +469,7 @@ void main(int argc, char** argv) {
 	glutInitWindowSize(width, height);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Project 2 - Color Mixer");
-	glClearColor(160.0/255, 160.0/255, 160.0/255, 0.0);
+	glClearColor(160.0f/255, 160.0f/255, 160.0f/255, 0.0f);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluOrtho2D(0, width, 0, height);
@@ -468,7 +478,7 @@ void main(int argc, char** argv) {
 	glutKeyboardFunc(keyboard);
 	glutMouseFunc(mouse);
 	glutMotionFunc(motion);
-	glutPassiveMotionFunc(possive);
+	glutPassiveMotionFunc(passive);
 	glutMainLoop();
 	//system("pause");
 }
