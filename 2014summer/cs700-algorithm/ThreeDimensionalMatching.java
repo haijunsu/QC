@@ -2,12 +2,13 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * CS700 project: 3-dimensional matching This solution can accept three sets
- * from an input file. One set is one line which is separated by a blank.
+ * CS700 project: 3-dimensional matching: This solution can accept three sets
+ * from an input file. One set is one line and members are separated by a blank.
  * 
  * Output file stores the solution result.
  * 
@@ -15,8 +16,11 @@ import java.util.List;
  *
  */
 public class ThreeDimensionalMatching {
+	
+	private static boolean isDebug = false;
 
 	public static void main(String[] args) {
+		isDebug = "true".equalsIgnoreCase(System.getProperty("isDebug"));
 		// Read data from file
 		if (args.length != 2) {
 			System.out
@@ -24,8 +28,10 @@ public class ThreeDimensionalMatching {
 			System.exit(1); // input error and exit
 		}
 		BufferedReader br = null;
+		PrintWriter writer = null;
 		try {
 			br = new BufferedReader(new FileReader(args[0]));
+			writer = new PrintWriter(args[1], "utf-8");
 			List<Triple> triples = new ArrayList<Triple>(); // subset T
 			List<Triple> matchings = new ArrayList<Triple>(); // matching set M
 			int lineNum = 0;
@@ -33,28 +39,41 @@ public class ThreeDimensionalMatching {
 			String[] setX = null;
 			String[] setY = null;
 			String[] setZ = null;
-			// Read data from file 
+			boolean isReadSetZ = false;
+			writer.println("INPUT:");
+			log("INPUT:");
+			// Read data from file
 			while ((line = br.readLine()) != null) {
 				if (line.trim().startsWith("#")) {
 					continue; // comment and ignore this line
 				}
-				System.out.println(line);
 				switch (lineNum) {
 				case 0: // set x value
 					setX = line.split(" ");
+					writer.print("Set X: {");
+					log("Set X: {");
 					break;
 				case 1: // set y value
 					setY = line.split(" ");
+					writer.print("Set Y: {");
+					log("Set Y: {");
 					break;
 				case 2: // set y value
 					setZ = line.split(" ");
+					writer.print("Set Z: {");
+					log("Set Z: {");
+					isReadSetZ = true;
 					break;
 				default:
 					break;
 				}
+				writer.println(line + "}");
+				log(line + "}");
+				if(isReadSetZ) // get all 3 sets and stop reading remain lines
+					break;
 				lineNum++;
 			}
-			//build subset T
+			// build subset T
 			for (int i = 0; i < setX.length; i++) {
 				for (int j = 0; j < setY.length; j++) {
 					for (int k = 0; k < setZ.length; k++) {
@@ -67,7 +86,6 @@ public class ThreeDimensionalMatching {
 				}
 
 			}
-			System.out.println(triples);
 			// iterator T to fill M
 			for (Triple triple : triples) {
 				boolean isMatched = false;
@@ -80,8 +98,40 @@ public class ThreeDimensionalMatching {
 							triple.getZ()));
 				}
 			}
-			System.out.println(matchings);
+			// write matchings to output file
+			writer.println("============================");
+			writer.println("3-DIMENTIONAL MATCHING SET: ");
+			writer.println("{ ");
+			log("============================");
+			log("3-DIMENTIONAL MATCHING SET: ");
+			log("{ ");
+			for (Triple tri : matchings) {
+				String strTri = "(" + tri.getX() + ", " + tri.getY() + ", "
+						+ tri.getZ() + ") ";
+				writer.println(strTri);
+				log(strTri);
 
+			}
+			writer.println("}");
+			log("}");
+			
+			// write matchings to output file
+			writer.println("============================");
+			writer.println("SUBSET T: ");
+			writer.println("{ ");
+			log("============================");
+			log("Subset T: ");
+			log("{ ");
+			for (Triple tri : triples) {
+				String strTri = "(" + tri.getX() + ", " + tri.getY() + ", "
+						+ tri.getZ() + ")";
+				writer.println(strTri);
+				log(strTri);
+
+			}
+			writer.println("}");
+			log("}");
+			System.out.println("Done!");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -92,13 +142,20 @@ public class ThreeDimensionalMatching {
 			try {
 				if (br != null)
 					br.close();
+				if (writer != null)
+					writer.close();
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
 		}
 
 	}
-
+	// print message to console
+	private static void log(String message) {
+		if(isDebug) {
+			System.out.println(message);
+		}
+	}
 }
 
 /**
@@ -134,6 +191,21 @@ class Triple {
 		this.z = z;
 	}
 
+
+	/**
+	 * If x1=x2 or y1=y2 or z1=z2, they match each other
+	 * 
+	 * @param t
+	 * @return
+	 */
+	public boolean isMatch(Triple t) {
+		if (t == null)
+			return false;
+		if (this == t)
+			return true;
+		return x == t.x || y == t.y || z == t.z;
+	}
+
 	public int getX() {
 		return x;
 	}
@@ -156,20 +228,6 @@ class Triple {
 
 	public void setZ(int z) {
 		this.z = z;
-	}
-
-	/**
-	 * If x1=x2 or y1=y2 or z1=z2, they match each other
-	 * 
-	 * @param t
-	 * @return
-	 */
-	public boolean isMatch(Triple t) {
-		if (t == null)
-			return false;
-		if (this == t)
-			return true;
-		return x == t.x || y == t.y || z == t.z;
 	}
 
 	@Override
