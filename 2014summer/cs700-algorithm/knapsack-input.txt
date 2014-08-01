@@ -1,0 +1,26 @@
+# maximum weight of container
+400
+
+# items (name, weight, value)
+item01, 90, 15
+item02, 13, 35
+item03, 15, 20
+item04, 50, 10
+item05, 15, 60
+item06, 68, 45
+item07, 27, 60
+item08, 39, 40
+item09, 23, 30
+item10, 52, 10
+item11, 11, 70
+item12, 32, 30
+item13, 24, 15
+item14, 48, 10
+item15, 73, 40
+item16, 42, 70
+item17, 43, 75
+item18, 22, 80
+item19, 70, 20
+item10, 18, 12
+item21, 41, 50
+item22, 30, 10

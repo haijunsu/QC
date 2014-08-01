@@ -1,3 +1,8 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +12,17 @@ import java.util.List;
  * the total weight is less than or equal to a given limit and the total value
  * is as large as possible.
  * 
+ * This solution can read the maximum weight of a container and items from an
+ * input file. The first valid line is the maximum weight value and each other
+ * valid line is one item.
+ * 
+ * Output file stores the solution result.
+ * 
+ * Compile: javac -cp . Knapsack.java
+ * 
+ * Usage: java -cp . Knapsack <input file> <output file>
+ * 
+ * 	      java -cp . -DisDebug=true Knapsack <input file> <output file>
  * 
  * 
  * @author Haijun Su 2014 summer
@@ -49,12 +65,10 @@ public class Knapsack {
 	/**
 	 * add an item into item container
 	 * 
-	 * @param name
-	 * @param weight
-	 * @param value
+	 * @param item
 	 */
-	public void add(String name, int weight, int value) {
-		itemList.add(new Item(name, weight, value));
+	public void add(Item item) {
+		itemList.add(item);
 	}
 
 	/**
@@ -83,9 +97,17 @@ public class Knapsack {
 						// iterator's value. else get the maximum value between
 						// previous iterator's value and current item value plus
 						// previous (j - weigh)'s value
-						currIter.add((weight > j) ? prevIter.get(j) : Math.max(
-								prevIter.get(j), itemList.get(i - 1).getValue()
-										+ prevIter.get(j - weight)));
+						if (weight > j) {
+							currIter.add(prevIter.get(j));
+						} else {
+							int value = itemList.get(i - 1).getValue()
+									+ prevIter.get(j - weight);
+							if (value > prevIter.get(j)) {
+								currIter.add(value);
+							} else {
+								currIter.add(prevIter.get(j));
+							}
+						}
 					} else {
 						// 0 items
 						currIter.add(0);
@@ -105,8 +127,8 @@ public class Knapsack {
 					Item item = itemList.get(i - 1);
 					int weight = item.getWeight();
 					packedList.add(item);
-					j -= weight;
 					totalWeight += weight;
+					j = j - weight;
 				}
 			}
 		}
@@ -124,7 +146,7 @@ public class Knapsack {
 	public int getMaxWeight() {
 		return maxWeight;
 	}
-	
+
 	public List<Item> getItemList() {
 		return itemList;
 	}
@@ -138,55 +160,110 @@ public class Knapsack {
 
 	public static void main(String[] args) {
 		isDebug = "true".equalsIgnoreCase(System.getProperty("isDebug"));
-
-		Knapsack pack = new Knapsack(400); // 400
-		// making the list of items that you want to bring
-		pack.add("map", 9, 150);
-		pack.add("compass", 13, 35);
-		pack.add("water", 153, 200);
-		pack.add("sandwich", 50, 160);
-		pack.add("glucose", 15, 60);
-		pack.add("tin", 68, 45);
-		pack.add("banana", 27, 60);
-		pack.add("apple", 39, 40);
-		pack.add("cheese", 23, 30);
-		pack.add("beer", 52, 10);
-		pack.add("suntan cream", 11, 70);
-		pack.add("camera", 32, 30);
-		pack.add("t-shirt", 24, 15);
-		pack.add("trousers", 48, 10);
-		pack.add("umbrella", 73, 40);
-		pack.add("waterproof trousers", 42, 70);
-		pack.add("waterproof overclothes", 43, 75);
-		pack.add("note-case", 22, 80);
-		pack.add("sunglasses", 7, 20);
-		pack.add("towel", 18, 12);
-		pack.add("socks", 4, 50);
-		pack.add("book", 30, 10);
-
-		// choose items:
-		List<Item> itemList = pack.chooseItems();
-
-		// write out the result in the standard output
-
-		System.out.println("Maximal weight = " + pack.getMaxWeight());
-		System.out.println("Total weight of solution = "
-				+ pack.getTotalWeight());
-		System.out.println("Total value = " + pack.getBenefit());
-		System.out.println();
-		System.out.println("The following items has been choosed");
-		for (Item item : itemList) {
-			System.out.println(item.getName() + "(weight = " + item.getWeight()
-					+ ", value = " + item.getValue() + ")");
+		// Read data from file
+		if (args.length != 2) {
+			System.out
+					.println("Usage: java -cp . Knapsack <input file> <output file>");
+			System.exit(1); // input error and exit
 		}
-		System.out.println("The following items has been choosed");
-		
-		System.out.println();
-		System.out.println("The following items are the total items which can be choosed for packing");
-		itemList = pack.getItemList();
-		for (Item item : itemList) {
-			System.out.println(item.getName() + "(weight = " + item.getWeight()
-					+ ", value = " + item.getValue() + ")");
+		BufferedReader br = null;
+		PrintWriter writer = null;
+		try {
+			br = new BufferedReader(new FileReader(args[0]));
+			writer = new PrintWriter(args[1], "utf-8");
+			List<String> inputLines = new ArrayList<String>();
+			Knapsack pack = null;
+			boolean isInitPack = false;
+			String line = null;
+			// Read data from file
+			while ((line = br.readLine()) != null) {
+				if (line.trim().startsWith("#") || line.trim().equals("")) {
+					continue; // ignore comment and blank line
+				}
+				inputLines.add(line);
+				if (!isInitPack) {
+					// Init Knapsack
+					pack = new Knapsack(Integer.valueOf(line.trim()));
+					isInitPack = true;
+				} else {
+					// construct item and add it to item list
+					String[] values = line.trim().split(",");
+					Item item = new Item(values[0].trim(),
+							Integer.valueOf(values[1].trim()),
+							Integer.valueOf(values[2].trim()));
+					pack.add(item);
+				}
+			}
+
+			// choose items:
+			List<Item> itemList = pack.chooseItems();
+			writer.println("============================");
+			writer.println("Knapsack result: ");
+			log("============================");
+			log("Knapsack result: ");
+
+			writer.println("Maximal weight of the pack = " + pack.getMaxWeight());
+			log("Maximal weight of the pack = " + pack.getMaxWeight());
+			writer.println("Total weight = "
+					+ pack.getTotalWeight());
+			log("Total weight = "
+					+ pack.getTotalWeight());
+			writer.println("Total value = " + pack.getBenefit());
+			log("Total value = " + pack.getBenefit());
+			writer.println();
+			log("");
+			writer.println("The following items has been choosed");
+			log("The following items has been choosed");
+			for (Item item : itemList) {
+				writer.println(item.getName() + "(weight = "
+						+ item.getWeight() + ", value = " + item.getValue()
+						+ ")");
+				log(item.getName() + "(weight = "
+						+ item.getWeight() + ", value = " + item.getValue()
+						+ ")");
+			}
+			writer.println();
+			log("");
+			
+			writer.println("============================");
+			log("============================");
+			writer.println("INPUT:");
+			log("INPUT:");
+			for (String inputline : inputLines) {
+				writer.println(inputline);
+				log(inputline);
+			}
+			writer.println();
+			log("");
+			
+			writer.println("============================");
+			log("============================");
+
+			writer.println("The following items are the total items which can be choosed for packing");
+			log("The following items are the total items which can be choosed for packing");
+			itemList = pack.getItemList();
+			for (Item item : itemList) {
+				writer.println(item.getName() + "(weight = "
+						+ item.getWeight() + ", value = " + item.getValue()
+						+ ")");
+				log(item.getName() + "(weight = "
+						+ item.getWeight() + ", value = " + item.getValue()
+						+ ")");
+			}
+			System.out.println("Done!");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (br != null)
+					br.close();
+				if (writer != null)
+					writer.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
 		}
 
 	}
