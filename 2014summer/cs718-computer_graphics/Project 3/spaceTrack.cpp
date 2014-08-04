@@ -1,7 +1,7 @@
 #include <gl/glut.h>
 #include <iostream>
 
-// CS718 Project 3 train track Submission: Su, Haijun
+// CS718 Project 3 space track Submission: Su, Haijun
 
 using namespace std;
 
