@@ -1,3 +1,4 @@
+<pre>
 This is for Haijun's Homework in QC.
 
 Git commands:
@@ -14,4 +15,4 @@ git config --global user.email navysu@gmail.com
 git clone https://github.com/haijunsu/QC.git
 
 TODO Create submit command to submit 316 homework
-
+</pre>
