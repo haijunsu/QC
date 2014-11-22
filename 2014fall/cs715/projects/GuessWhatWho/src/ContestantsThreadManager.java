@@ -16,17 +16,29 @@ public class ContestantsThreadManager {
 	private static void debug(String message) {
 		GuessWhatWho.log(0, "ContestantsThreadManager - " + message);
 	}
-
+	
+	/**
+	 * add a constestant thread
+	 * @param thread
+	 */
 	public static void add(Thread thread) {
 		debug(thread.getName() + " is added.");
 		cttMaps.put(thread.getName(), thread);
 	}
-
+	
+	/**
+	 * remove a constestant thread
+	 * @param name
+	 */
 	public static void remove(String name) {
 		debug(name + " is removed.");
 		cttMaps.remove(name);
 	}
-
+	
+	/**
+	 * Interrupt all contestant threads except the excludeName
+	 * @param excludeName
+	 */
 	public static void interruptOthers(String excludeName) {
 		Iterator<Thread> threads = cttMaps.values().iterator();
 		while (threads.hasNext()) {

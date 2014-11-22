@@ -8,6 +8,9 @@ import java.util.Random;
  */
 public abstract class Base {
 	
+	/**
+	 * Id for sub-object. Inited by sub-class.
+	 */
 	protected int id;
 		
 	/**
@@ -93,9 +96,16 @@ public abstract class Base {
 	protected void error(Object message) {
 		GuessWhatWho.log(3, getName() + " - " + message);
 	}
-
-	protected void thinkingAndAnswer() {
-		
+	
+	/**
+	 * Thinking time for each question
+	 * @throws InterruptedException
+	 */
+	protected void thinkingAndAnswer(int maxTime) throws InterruptedException {
+		if (maxTime < 10) maxTime = 11;//at list 1 for generate random number
+		long nap = getRandomNumber(10, maxTime);
+		debug("thinking time: " + nap);
+		Thread.sleep((long)nap);		
 	}
 	/**
 	 * The instance name, which will be used for output.
@@ -103,7 +113,11 @@ public abstract class Base {
 	 * @return
 	 */
 	public abstract String getName();
-
+	
+	/**
+	 * get object id
+	 * @return
+	 */
 	public int getId() {
 		return id;
 	}

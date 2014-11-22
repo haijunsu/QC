@@ -18,7 +18,7 @@ public class Announcer extends Base implements Runnable {
 	/**
 	 * Queue that Contestants are waiting for grade.
 	 */
-	private List<Object> waitGradeContestants = new ArrayList<Object>();
+	private List<Contestant> waitGradeContestants = new ArrayList<Contestant>();
 
 	/**
 	 * Gruop size is the room capacity.
@@ -70,6 +70,12 @@ public class Announcer extends Base implements Runnable {
 	 * Condition value. Identity how many contestants have been introduced to
 	 * Host.
 	 */
+	private int readyForGameCounter = 0;
+
+	/**
+	 * Condition value. Identity how many contestants have been introduced to
+	 * Host.
+	 */
 	private int introducedCounter = -1;
 
 	/**
@@ -102,6 +108,16 @@ public class Announcer extends Base implements Runnable {
 		}
 	}
 
+	private Contestant getContestantById(int id) {
+		// since contestants.length is small, linear search is ok
+		for (int i = 0; i < contestants.length; i++) {
+			if (contestants[i].getId() == id) {
+				return contestants[i];
+			}
+		}
+		return null;
+	}
+	
 	public int getExamTime() {
 		return examTime;
 	}
@@ -231,23 +247,22 @@ public class Announcer extends Base implements Runnable {
 	}
 
 	public void submitAnswers(int id) {
-		debug("Contestant " + id + " has submitted answers.");
-		Object convey = new Object();
+		Contestant ctt = getContestantById(id);
 		synchronized (this) {
-			waitGradeContestants.add(convey);
+			waitGradeContestants.add(ctt);
+			info(ctt.getName() + " has submitted answers.");
 			if (waitGradeContestants.size() == numContestants) {
 				notify();
 			}
 		}
-		synchronized (convey) {
+		synchronized (ctt) {
 			while (true) {
 				try {
-					convey.wait();
+					ctt.wait();
 					break;
 				} catch (InterruptedException e) {
 					warn("waiting for grade is interrupted.");
-					e.printStackTrace();
-					if (contestants[id].getExamScore() > 0) {
+					if (ctt.getExamScore() > 0) {
 						break;
 					}
 				}
@@ -289,7 +304,7 @@ public class Announcer extends Base implements Runnable {
 					return o1.getExamScore() > o2.getExamScore() ? -1 : 1;
 				}
 			});
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < examWinners.length; i++) {
 				contestants[i].setWinExam(true);
 				examWinners[i] = contestants[i];
 			}
@@ -298,15 +313,27 @@ public class Announcer extends Base implements Runnable {
 		}
 		// notify all contestants by submit order
 		for (int i = 0; i < waitGradeContestants.size(); i++) {
-			Object convey = waitGradeContestants.get(i);
-			synchronized (convey) {
-				convey.notify();
+			Contestant ctt = waitGradeContestants.get(i);
+			synchronized (ctt) {
+				if (ctt.isWinExam()) {
+					info("Congs, " + ctt.getName() + ". You win the exam");
+				} else {
+					info("Sorry, " + ctt.getName() + ". You lost the exam");
+				}
+				ctt.notify();
 			}
 		}
 
 	}
 
 	public void readyForGame(int id) {
+		synchronized (this) {
+			++readyForGameCounter;
+			debug("readyForGameCounter = " + readyForGameCounter);
+			if (readyForGameCounter == examWinners.length) {
+				notify();
+			}
+		}
 		Contestant ctt = null;
 		int pos = -1;
 		for (int i = 0; i < examWinners.length; i++) {
@@ -326,7 +353,6 @@ public class Announcer extends Base implements Runnable {
 						break;
 					} catch (InterruptedException e) {
 						warn("waiting for being introduced is interrupted.");
-						e.printStackTrace();
 						if (introducedCounter >= pos) {
 							break;
 						}
@@ -346,8 +372,6 @@ public class Announcer extends Base implements Runnable {
 
 		gradeExam();
 
-		// greeting for winners and announce game.
-		info("Cong winners. Let's start the game. blablalba....");
 		// create host
 		Host host = new Host();
 		host.setContestants(examWinners);
@@ -356,6 +380,27 @@ public class Announcer extends Base implements Runnable {
 		}
 		Thread hostT = new Thread(host, host.getName());
 		hostT.start();
+
+		info("Waiting for all winners to start the game.");
+		synchronized (this) {
+			if (readyForGameCounter < examWinners.length) {
+				while (true) {
+					try {
+						wait();
+						break;
+					} catch (InterruptedException e) {
+						warn("Waiting for winners is interrupted.");
+						if (readyForGameCounter == examWinners.length) {
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		// greeting for winners and announce game.
+		info("Cong winners. Let's start the game. blablalba....");
+
 		// introduce contestants
 		for (int i = 0; i < examWinners.length; i++) {
 			synchronized (examWinners[i]) {

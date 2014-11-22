@@ -50,17 +50,7 @@ public class Host extends Base implements Runnable {
 	/**
 	 * Condition value
 	 */
-	private int responseCount;
-
-	/**
-	 * Condition value
-	 */
-	private boolean isQuitFinal;
-
-	/**
-	 * Condition value
-	 */
-	private boolean isDoneFinal;
+	private int responseCounter;
 
 	public Host() {
 		this.game = GuessWhatWho.getGame();
@@ -127,14 +117,14 @@ public class Host extends Base implements Runnable {
 	}
 
 	public synchronized void submitAnswer(int id) {
-		++responseCount;
+		++responseCounter;
 		if (submitId < 0) { // only the 1st contestant can get score
 			submitId = id;
 			// wake up other contestants
 			ContestantsThreadManager.interruptOthers(getContestantById(id)
 					.getName());
 		}
-		if (responseCount == contestants.length) {
+		if (responseCounter == contestants.length) {
 			questionIsReady = false;
 			synchronized (waitForAnswer) {
 				waitForAnswer.notify();
@@ -144,8 +134,8 @@ public class Host extends Base implements Runnable {
 
 	// For interrupted contestant
 	public synchronized void response() {
-		++responseCount;
-		if (responseCount == contestants.length) {
+		++responseCounter;
+		if (responseCounter == contestants.length) {
 			questionIsReady = false;
 			synchronized (waitForAnswer) {
 				waitForAnswer.notify();
@@ -195,16 +185,18 @@ public class Host extends Base implements Runnable {
 
 		// reset status
 		synchronized (this) {
-			responseCount = 0;
+			responseCounter = 0;
 		}
 
 	}
 
 	public void getFinalQuestion(int id) {
 		Contestant ctt = getContestantById(id);
-		waitGuessWhatWhoContestants.add(ctt);
 		synchronized (this) {
+			waitGuessWhatWhoContestants.add(ctt);
+			info(ctt.getName() + " is asking for the final question.");
 			if (waitGuessWhatWhoContestants.size() == contestants.length) {
+				responseCounter = 0; // reset counter
 				notify();
 			}
 		}
@@ -224,18 +216,40 @@ public class Host extends Base implements Runnable {
 		}
 	}
 
-	public synchronized void submitFinalAnswer() {
-		isDoneFinal = true;
-		notify();
+	public synchronized void submitFinalAnswer(int id) {
+		Contestant ctt = getContestantById(id);
+		if (ctt.getGameScore() >= 0) {
+			// grade question
+			int weger = ctt.getWager();
+			boolean correct = getRandomNumber(0, 100) <= 50; // 50%
+																// percent
+			if (correct) {
+				info("Congs, " + ctt.getName() + ". You have the right answer and earn " + weger
+						+ " credits.");
+				ctt.adjustGameScore(weger);
+			} else {
+				info("Sorry, " + ctt.getName() + ". Your answer is wrong and you lost " + weger
+						+ " credits.");
+				ctt.adjustGameScore(0 - weger);
+			}
+		}
+		++responseCounter;
+		if (responseCounter == contestants.length) {
+			notify();
+		}
 	}
 
-	public synchronized void quitFinalAnswer() {
-		isQuitFinal = true;
-		notify();
+	public synchronized void quitFinalAnswer(int id) {
+		info("I am sorry, " + getContestantById(id).getName() + ". Good-bye.");
+		++responseCounter;
+		if (responseCounter == contestants.length) {
+			notify();
+		}
 	}
 
-	public synchronized void handleFinalQuestion() {
+	public synchronized void distributeFinalQuestion() {
 		debug("handle final question");
+		debug("wait for all contestants ready for final question.");
 		if (waitGuessWhatWhoContestants.size() < contestants.length) {
 			while (true) {
 				try {
@@ -250,32 +264,14 @@ public class Host extends Base implements Runnable {
 				}
 			}
 		}
+		info("Final question is blablabla......");
+		debug("notify all contestants in order.");
 		for (int i = 0; i < waitGuessWhatWhoContestants.size(); i++) {
 			Contestant ctt = waitGuessWhatWhoContestants.get(i);
-			ctt.setHasFinal(true);
-			ctt.notify();
-			// wait for answer
-			while (true) {
-				try {
-					wait();
-					break;
-				} catch (InterruptedException e) {
-					warn("Waiting contestant's answer is interrupted.");
-					e.printStackTrace();
-					if (isQuitFinal || isDoneFinal) {
-						break;
-					}
-				}
-			}
-			if (isDoneFinal) {
-				// grade question
-				int weger = ctt.getWager();
-				boolean correct = getRandomNumber(0, 100) <= 50; // 50% percent
-				if (correct) {
-					ctt.adjustGameScore(weger);
-				} else {
-					ctt.adjustGameScore(0 - weger);
-				}
+			info("Wake up " + ctt.getName() + " to answer final question.");
+			synchronized (ctt) {
+				ctt.setHasFinal(true);
+				ctt.notify();
 			}
 		}
 
@@ -302,7 +298,26 @@ public class Host extends Base implements Runnable {
 			waitForQuestion.notifyAll();
 		}
 
-		handleFinalQuestion();
+		distributeFinalQuestion();
+
+		synchronized (this) {
+
+			if (responseCounter < contestants.length) {
+				// wait for answers
+				while (true) {
+					try {
+						wait();
+						break;
+					} catch (InterruptedException e) {
+						warn("Waiting contestant's answer is interrupted.");
+						e.printStackTrace();
+						if (responseCounter == contestants.length) {
+							break;
+						}
+					}
+				}
+			}
+		}
 
 		// find winner
 		Contestant winner = contestants[0];// assume the first one is winner
