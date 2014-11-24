@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Hosts hosts the game.
  * 
  * @author Haijun Su Date Nov 16, 2014
  *
@@ -9,53 +10,85 @@ import java.util.List;
 public class Host extends Base implements Runnable {
 
 	/**
-	 * Contestants
+	 * Contestants who are playing the game
 	 */
 	private Contestant[] contestants;
 
+	/**
+	 * Game object
+	 */
 	private Game game;
+
 	/**
 	 * Queue that Contestants are waiting for GuessWhatWho question.
 	 */
 	private List<Contestant> waitGuessWhatWhoContestants = new ArrayList<Contestant>();
 	/**
-	 * answer timeout. default is 20s.
+	 * answer timeout.
 	 */
 	private int answerTimeout = 20;
 
+	/**
+	 * Round for the game questions.
+	 */
 	private int currentRound;
 
+	/**
+	 * Question position in current round
+	 */
 	private int currentQuestion;
 
 	/**
-	 * Condition Vaule
+	 * Condition value. Waiting for announcer to start the game
+	 */
+	private boolean canStartGame = false;
+
+	/**
+	 * Condition Vaule. Contestant needs to wait the question before Host
+	 * announces it.
 	 */
 	private Object waitForQuestion = new Object();
 
 	/**
-	 * Condition Vaule
+	 * Condition Vaule. If Host has already announces the question, Contestant
+	 * doesn't have to wait.
 	 */
 	private boolean questionIsReady;
 
 	/**
-	 * Condition Vaule
+	 * Condition Vaule. Host needs to wait for all contestants sumbit their
+	 * answers.
 	 */
 	private Object waitForAnswer = new Object();
 
 	/**
-	 * Condition Vaule
+	 * Condition Vaule. Identity which contestant is the first one that sumbits
+	 * the answer for current question.
 	 */
 	private int submitId = -1;
 
 	/**
-	 * Condition value
+	 * Condition value. If contestant lost a chance to answer question, he/she
+	 * has to response the host. Also if contestant sumbits an answer, it is a
+	 * response. If all contestants have responed the question, the Host can
+	 * grade it.
 	 */
 	private int responseCounter;
 
+	/**
+	 * Construct Host.
+	 */
 	public Host() {
+		// get the game object
 		this.game = GuessWhatWho.getGame();
 	}
 
+	/**
+	 * Find contestant by id
+	 * 
+	 * @param id
+	 * @return
+	 */
 	private Contestant getContestantById(int id) {
 		// since there is only 4 elements, linear search is ok
 		for (int i = 0; i < contestants.length; i++) {
@@ -67,19 +100,27 @@ public class Host extends Base implements Runnable {
 	}
 
 	/**
-	 * Condition value.
+	 * contestants who will play the game
+	 * 
+	 * @param contestants
 	 */
-	private boolean canStartGame = false;
-
 	public void setContestants(Contestant[] contestants) {
 		this.contestants = contestants;
 	}
 
-	public synchronized void startGame() {
-		canStartGame = true;
-		notify();
+	/**
+	 * Whether all round questions have been asked.
+	 * 
+	 * @return
+	 */
+	public boolean isRoundQuestionsFinished() {
+		return currentQuestion == this.game.getNumQuestions()
+				* this.game.getNumRounds();
 	}
 
+	/**
+	 * Wait for announcer signal to start the game.
+	 */
 	public synchronized void waitGameStartSignal() {
 		info("wait for start signal...");
 		if (!canStartGame) {
@@ -97,16 +138,32 @@ public class Host extends Base implements Runnable {
 		}
 	}
 
-	public int getRoundQuestion() {
+	/**
+	 * Announcer notifies him to start the game
+	 */
+	public synchronized void startGame() {
+		canStartGame = true;
+		notify();
+	}
+
+	/**
+	 * Contestant ask for current question and current question must great than
+	 * the question he has answered.
+	 * 
+	 * @param question
+	 * @return
+	 */
+	public int getRoundQuestion(int question) {
 		synchronized (waitForQuestion) {
-			if (!questionIsReady && currentQuestion >= 0) {
+			if (!questionIsReady && currentQuestion <= question) {
 				while (true) {
 					try {
+						// current question is not ready
 						waitForQuestion.wait();
 						break;
 					} catch (InterruptedException e) {
 						warn("waiting for question is interrupted.");
-						if (questionIsReady) {
+						if (questionIsReady && currentQuestion > question) {
 							break;
 						}
 					}
@@ -116,6 +173,11 @@ public class Host extends Base implements Runnable {
 		return currentQuestion;
 	}
 
+	/**
+	 * Contestant submits the answer
+	 * 
+	 * @param id
+	 */
 	public synchronized void submitAnswer(int id) {
 		++responseCounter;
 		if (submitId < 0) { // only the 1st contestant can get score
@@ -132,8 +194,12 @@ public class Host extends Base implements Runnable {
 		}
 	}
 
-	// For interrupted contestant
+	/**
+	 * Contestant has been interrupt and just response that he/she has lost the
+	 * question.
+	 */
 	public synchronized void response() {
+		// For interrupted contestant
 		++responseCounter;
 		if (responseCounter == contestants.length) {
 			questionIsReady = false;
@@ -143,6 +209,9 @@ public class Host extends Base implements Runnable {
 		}
 	}
 
+	/**
+	 * Ask game question and grade it after all contestants has answered it.
+	 */
 	public void askQuestion() {
 		info("Asking question: What is the meaning of number "
 				+ currentQuestion + " in Round " + currentRound + "?");
@@ -162,7 +231,7 @@ public class Host extends Base implements Runnable {
 					} catch (InterruptedException e) {
 						warn("Waiting for answer is interrupted.");
 						e.printStackTrace();
-						if (submitId >= 0) {// answer is ready
+						if (submitId > -1) {// answer is ready
 							break;
 						}
 					}
@@ -170,26 +239,37 @@ public class Host extends Base implements Runnable {
 			}
 		}
 		// check answer
-		boolean correct = getRandomNumber(0, 100) <= (game.getRightPercent() * 100);
-		Contestant ctt = getContestantById(submitId);
-		debug("submit id: " + submitId);
-		if (correct) {
-			info(ctt.getName() + " is correct. Add score "
-					+ game.getQuestionValues());
-			ctt.adjustGameScore(game.getQuestionValues());
+		if (submitId > -1) {
+			boolean correct = getRandomNumber(0, 100) <= (game
+					.getRightPercent() * 100);
+			Contestant ctt = getContestantById(submitId);
+			debug("submit id: " + submitId);
+			if (correct) {
+				info(ctt.getName() + " is correct. Add score "
+						+ game.getQuestionValues());
+				ctt.adjustGameScore(game.getQuestionValues());
+			} else {
+				info(ctt.getName() + " is wrong. Substract score "
+						+ game.getQuestionValues());
+				ctt.adjustGameScore(0 - game.getQuestionValues());
+			}
 		} else {
-			info(ctt.getName() + " is wrong. Substract score "
-					+ game.getQuestionValues());
-			ctt.adjustGameScore(0 - game.getQuestionValues());
+			info("Nobody answers this question: " + currentQuestion);
 		}
 
 		// reset status
 		synchronized (this) {
 			responseCounter = 0;
+			questionIsReady = false;
 		}
 
 	}
 
+	/**
+	 * Contestants ask for the final question
+	 * 
+	 * @param id
+	 */
 	public void getFinalQuestion(int id) {
 		Contestant ctt = getContestantById(id);
 		synchronized (this) {
@@ -207,7 +287,6 @@ public class Host extends Base implements Runnable {
 					break;
 				} catch (InterruptedException e) {
 					warn("waiting for final is interrupted.");
-					e.printStackTrace();
 					if (ctt.isHasFinal()) {
 						break;
 					}
@@ -216,6 +295,11 @@ public class Host extends Base implements Runnable {
 		}
 	}
 
+	/**
+	 * Constestant submits the final answer.
+	 * 
+	 * @param id
+	 */
 	public synchronized void submitFinalAnswer(int id) {
 		Contestant ctt = getContestantById(id);
 		if (ctt.getGameScore() >= 0) {
@@ -224,11 +308,13 @@ public class Host extends Base implements Runnable {
 			boolean correct = getRandomNumber(0, 100) <= 50; // 50%
 																// percent
 			if (correct) {
-				info("Congs, " + ctt.getName() + ". You have the right answer and earn " + weger
+				info("Congs, " + ctt.getName()
+						+ ". You have the right answer and earn " + weger
 						+ " credits.");
 				ctt.adjustGameScore(weger);
 			} else {
-				info("Sorry, " + ctt.getName() + ". Your answer is wrong and you lost " + weger
+				info("Sorry, " + ctt.getName()
+						+ ". Your answer is wrong and you lost " + weger
 						+ " credits.");
 				ctt.adjustGameScore(0 - weger);
 			}
@@ -239,6 +325,11 @@ public class Host extends Base implements Runnable {
 		}
 	}
 
+	/**
+	 * Contestant has no wager for the question and quit.
+	 * 
+	 * @param id
+	 */
 	public synchronized void quitFinalAnswer(int id) {
 		info("I am sorry, " + getContestantById(id).getName() + ". Good-bye.");
 		++responseCounter;
@@ -247,9 +338,12 @@ public class Host extends Base implements Runnable {
 		}
 	}
 
+	/**
+	 * announce the final question
+	 */
 	public synchronized void distributeFinalQuestion() {
 		debug("handle final question");
-		debug("wait for all contestants ready for final question.");
+		info("wait for all contestants ready for final question.");
 		if (waitGuessWhatWhoContestants.size() < contestants.length) {
 			while (true) {
 				try {
@@ -286,16 +380,11 @@ public class Host extends Base implements Runnable {
 		currentRound = 0;
 		while (++currentRound <= game.getNumRounds()) {
 			debug("Start round-" + currentRound);
-			currentQuestion = 0;
-			while (++currentQuestion <= game.getNumQuestions()) {
+			while (++currentQuestion <= currentRound * game.getNumQuestions()) {
 				debug("Question: " + currentQuestion);
 				askQuestion();
 			}
 			info("Round " + currentRound + " has done.");
-		}
-		synchronized (waitForQuestion) {
-			currentQuestion = -1;
-			waitForQuestion.notifyAll();
 		}
 
 		distributeFinalQuestion();
@@ -310,7 +399,6 @@ public class Host extends Base implements Runnable {
 						break;
 					} catch (InterruptedException e) {
 						warn("Waiting contestant's answer is interrupted.");
-						e.printStackTrace();
 						if (responseCounter == contestants.length) {
 							break;
 						}

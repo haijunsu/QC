@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * 
+ * Handle all contestant threads
  * @author Haijun Su Date Nov 16, 2014
  *
  */

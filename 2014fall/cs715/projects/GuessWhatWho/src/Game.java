@@ -1,4 +1,5 @@
 /**
+ * Define game properties
  * 
  * @author Haijun Su Date Nov 16, 2014
  *
@@ -47,6 +48,13 @@ public class Game {
 
 	public void setRightPercent(float rightPercent) {
 		this.rightPercent = rightPercent;
+	}
+
+	@Override
+	public String toString() {
+		return "Game [numRounds=" + numRounds + ", numQuestions="
+				+ numQuestions + ", questionValues=" + questionValues
+				+ ", rightPercent=" + rightPercent + "]";
 	}
 	
 	

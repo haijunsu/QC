@@ -47,7 +47,7 @@ public class GuessWhatWho {
 	/**
 	 * default info level. Debug levels: 0-Debug, 1-Info, 2-Warn, 3-Error
 	 */
-	private static int defaultDebugLevel = 1;
+	private static int logLevel = 1;
 
 	/**
 	 * Date format
@@ -59,17 +59,17 @@ public class GuessWhatWho {
 	 * Length of the game
 	 */
 	private static int numRounds = 2;
-	
+
 	/**
 	 * Number of questions in each round
 	 */
 	private static int numQuestions = 5;
-	
+
 	/**
 	 * Question value
 	 */
 	private static int questionValues = 200;
-	
+
 	/**
 	 * Percent of right answer
 	 */
@@ -83,14 +83,15 @@ public class GuessWhatWho {
 	 * Number of contestants
 	 */
 	private static int num_contestants = 13;
-	
+
 	/**
 	 * Game properties
 	 */
 	private static Game game = null;
-	
+
 	/**
 	 * Game object
+	 * 
 	 * @return
 	 */
 	public static Game getGame() {
@@ -105,21 +106,23 @@ public class GuessWhatWho {
 	public static final long age() {
 		return System.currentTimeMillis() - START_TIME;
 	}
-	
+
 	/**
 	 * Utility to print message on console
+	 * 
 	 * @param level
 	 * @param message
 	 */
 	public static void log(int level, String message) {
-		if (level >= defaultDebugLevel) {
+		if (level >= logLevel) {
 			System.out.println(df.format(new Date()) + " - "
 					+ getDebugLevel(level) + ": " + message);
 		}
 	}
-	
+
 	/**
 	 * Convert log lever from integer to string
+	 * 
 	 * @param level
 	 * @return
 	 */
@@ -144,13 +147,53 @@ public class GuessWhatWho {
 		}
 		return rtnValue;
 	}
+
 	/**
 	 * Handle args and update default values
+	 * 
 	 * @param args
 	 */
 	public static void handleArgs(String[] args) {
-		//TODO
+		if (args.length % 2 != 0) {
+			// usage
+			System.out.println("Usage: \n\tjava GuessWhatWho [-rqvpgc <num>] [-log <num]");
+			System.out.println("\t\t-log\tlog level");
+			System.out.println("\t\t-r\tNumber of rounds in the game");
+			System.out.println("\t\t-q\tNumber of questions per round");
+			System.out.println("\t\t-v\tQuestion value");
+			System.out.println("\t\t-p\tRight percent (0-100)");
+			System.out.println("\t\t-g\tRoom capacity (group size)");
+			System.out.println("\t\t-c\tNumber of Contestants");
+			System.exit(1);
+			
+		}
+		for (int i = 0; i < args.length;) { // log level
+			if("-log".equals(args[i])) {
+				logLevel = Integer.valueOf(args[i+1]);
+				log(0, "logLevel = " + logLevel);
+			} else if ("-r".equals(args[i])) { // number of round
+				numRounds = Integer.valueOf(args[i+1]);
+				log(0, "numRounds = " + numRounds);
+			} else if ("-q".equals(args[i])) { // number of questions/round
+				numQuestions = Integer.valueOf(args[i+1]);
+				log(0, "numQuestions = " + numQuestions);
+			} else if ("-v".equals(args[i])) { // question value
+				questionValues = Integer.valueOf(args[i+1]);
+				log(0, "questionValues = " + questionValues);
+			} else if ("-p".equals(args[i])) { // right percent
+				rightPercent = Float.valueOf(args[i+1])/100;
+				log(0, "rightPercent = " + rightPercent);
+			} else if ("-g".equals(args[i])) { // room capacity (group size)
+				room_capacity = Integer.valueOf(args[i+1]);
+				log(0, "room_capacity = " + room_capacity);
+			} else if ("-c".equals(args[i])) { // number of contestants
+				num_contestants = Integer.valueOf(args[i+1]);
+				log(0, "num_contestants = " + num_contestants);
+			}
+			i += 2;
+		}
 	}
+
 	public static void main(String[] args) {
 		// handle arguments
 		handleArgs(args);
@@ -162,8 +205,8 @@ public class GuessWhatWho {
 		}
 		annc.setContestants(contestants);
 		// construct game object
-		game = new Game(numRounds, numQuestions, questionValues,
-				rightPercent);
+		game = new Game(numRounds, numQuestions, questionValues, rightPercent);
+		log(0, game.toString());
 		// start announcer
 		Thread anncT = new Thread(annc, annc.getName());
 		anncT.start();

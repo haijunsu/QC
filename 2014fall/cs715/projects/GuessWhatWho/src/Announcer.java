@@ -4,6 +4,9 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
+ * Announcer's tasks:
+ *   1. holds the written exam.
+ *   2. creates the host and gives signal to host to start game.
  * 
  * @author Haijun Su Date Nov 16, 2014
  *
@@ -84,6 +87,8 @@ public class Announcer extends Base implements Runnable {
 	private Object seats = new Object();
 
 	/**
+	 * Construct Announcer. Init the group locks base on the room_capacity and
+	 * num_contestants
 	 * 
 	 * @param room_capacity
 	 * @param num_contestants
@@ -108,6 +113,12 @@ public class Announcer extends Base implements Runnable {
 		}
 	}
 
+	/**
+	 * Get Contestant by ID
+	 * 
+	 * @param id
+	 * @return
+	 */
 	private Contestant getContestantById(int id) {
 		// since contestants.length is small, linear search is ok
 		for (int i = 0; i < contestants.length; i++) {
@@ -117,11 +128,21 @@ public class Announcer extends Base implements Runnable {
 		}
 		return null;
 	}
-	
+
+	/**
+	 * Written exam time
+	 * 
+	 * @return
+	 */
 	public int getExamTime() {
 		return examTime;
 	}
 
+	/**
+	 * Contestants objects
+	 * 
+	 * @param contestants
+	 */
 	public void setContestants(Contestant[] contestants) {
 		this.contestants = contestants;
 	}
@@ -131,6 +152,9 @@ public class Announcer extends Base implements Runnable {
 		return "Announcer";
 	}
 
+	/**
+	 * Let contestants to join a group
+	 */
 	public void joinGroup() {
 		Object group = groupLocks.get(currentGroup);
 		synchronized (group) {
@@ -159,6 +183,9 @@ public class Announcer extends Base implements Runnable {
 		}
 	}
 
+	/**
+	 * Groups are ready and waiting from enter classroom.
+	 */
 	public synchronized void askEnterClassroom() {
 		++readyGroups;
 		info("Group " + readyGroups
@@ -168,6 +195,9 @@ public class Announcer extends Base implements Runnable {
 		}
 	}
 
+	/**
+	 * Notify groups to enter classroom
+	 */
 	public synchronized void givePermissionEnterClassroom() {
 		info("Wait for groups ...");
 		if (readyGroups < groupLocks.size()) {
@@ -195,6 +225,10 @@ public class Announcer extends Base implements Runnable {
 		}
 	}
 
+	/**
+	 * Contestants enter classroom and take seats. The last one notifies the
+	 * announcer that they are ready to start the written exam.
+	 */
 	public void askForSeat() {
 		synchronized (seats) {
 			seatCounter++;
@@ -222,6 +256,9 @@ public class Announcer extends Base implements Runnable {
 		}
 	}
 
+	/**
+	 * Announcer announces the exam starts.
+	 */
 	public synchronized void startExam() {
 		info("Wait for having seats of all contestants");
 		if (seatCounter < numContestants) {
@@ -246,6 +283,11 @@ public class Announcer extends Base implements Runnable {
 		}
 	}
 
+	/**
+	 * Contestant submits his/her answer of the written exam.
+	 * 
+	 * @param id
+	 */
 	public void submitAnswers(int id) {
 		Contestant ctt = getContestantById(id);
 		synchronized (this) {
@@ -270,6 +312,10 @@ public class Announcer extends Base implements Runnable {
 		}
 	}
 
+	/**
+	 * Announcer grades the exam and finds the winners. Then he notifies
+	 * contestants one by one in FCFS order.
+	 */
 	public void gradeExam() {
 		info("Waiting for submission...");
 		synchronized (this) {
@@ -326,6 +372,10 @@ public class Announcer extends Base implements Runnable {
 
 	}
 
+	/**
+	 * Winners claim that they are ready for the game
+	 * @param id
+	 */
 	public void readyForGame(int id) {
 		synchronized (this) {
 			++readyForGameCounter;
@@ -353,6 +403,7 @@ public class Announcer extends Base implements Runnable {
 						break;
 					} catch (InterruptedException e) {
 						warn("waiting for being introduced is interrupted.");
+						// check whether the announcer has introduced him/her.
 						if (introducedCounter >= pos) {
 							break;
 						}
@@ -362,6 +413,9 @@ public class Announcer extends Base implements Runnable {
 		}
 	}
 
+	/**
+	 * Thread run method. 
+	 */
 	@Override
 	public void run() {
 		debug("Start...");

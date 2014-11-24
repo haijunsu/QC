@@ -1,3 +1,9 @@
+/**
+ * Contestants attend the written and winners attend the game.
+ * 
+ * @author Haijun Su Date Nov 13, 2014
+ *
+ */
 public class Contestant extends Base implements Runnable {
 
 	/**
@@ -24,6 +30,11 @@ public class Contestant extends Base implements Runnable {
 	 * Wager for the final question.
 	 */
 	private int wager;
+
+	/**
+	 * The question from game he is thinking and answering
+	 */
+	private int currentQuestion;
 
 	/**
 	 * Announcer
@@ -81,11 +92,12 @@ public class Contestant extends Base implements Runnable {
 		info("Thank you. I am ready for the game!");
 
 		debug("waiting to start game...");
-		while (host.getRoundQuestion() >= 0) {
+		while (!host.isRoundQuestionsFinished()) {
+			// get current question
+			currentQuestion = host.getRoundQuestion(currentQuestion);
 			boolean isInterrupted = false;
 			try {
 				thinkingAndAnswer(host.getAnswerTimeout());
-				;
 			} catch (InterruptedException e) {
 				warn("Thinking was interrupted.");
 				isInterrupted = true;
@@ -165,6 +177,14 @@ public class Contestant extends Base implements Runnable {
 
 	public void setHasFinal(boolean hasFinal) {
 		this.hasFinal = hasFinal;
+	}
+
+	public int getCurrentQuestion() {
+		return currentQuestion;
+	}
+
+	public void setCurrentQuestion(int currentQuestion) {
+		this.currentQuestion = currentQuestion;
 	}
 
 	@Override
