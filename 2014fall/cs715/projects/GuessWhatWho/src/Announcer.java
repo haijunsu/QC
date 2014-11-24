@@ -4,9 +4,8 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Announcer's tasks:
- *   1. holds the written exam.
- *   2. creates the host and gives signal to host to start game.
+ * Announcer's tasks: 1. holds the written exam. 2. creates the host and gives
+ * signal to host to start game.
  * 
  * @author Haijun Su Date Nov 16, 2014
  *
@@ -63,6 +62,11 @@ public class Announcer extends Base implements Runnable {
 	 * Condition value. Identity how many contestants have joined group.
 	 */
 	private int readyGroups = 0;
+
+	/**
+	 * Condition value. Ready to enter classroom.
+	 */
+	private boolean readyEnterClassroom = false;
 
 	/**
 	 * Condition value. Identity how many contestants have seats.
@@ -157,7 +161,7 @@ public class Announcer extends Base implements Runnable {
 	 */
 	public void joinGroup() {
 		Object group = groupLocks.get(currentGroup);
-		synchronized (group) {
+		synchronized (this) {
 			++currentGroupSize;
 			if (currentGroupSize == this.roomCapacity
 					|| (roomCapacity * currentGroup + currentGroupSize == numContestants)) {
@@ -166,17 +170,21 @@ public class Announcer extends Base implements Runnable {
 				currentGroupSize = 0;
 				++currentGroup;
 			}
-			while (true) {
-				try {
-					group.wait();
-					break;
-				} catch (InterruptedException e) {
-					warn("waiting to ender classroom is interrupted.");
-					e.printStackTrace();
-					// if miss signal, it needs to check condition again to
-					// determine to exit or continue wait.
-					if (readyGroups == groupLocks.size()) {
+		}
+		synchronized (group) {
+			if (!readyEnterClassroom) {
+				while (true) {
+					try {
+						group.wait();
 						break;
+					} catch (InterruptedException e) {
+						warn("waiting to ender classroom is interrupted.");
+						e.printStackTrace();
+						// if miss signal, it needs to check condition again to
+						// determine to exit or continue wait.
+						if (readyEnterClassroom) {
+							break;
+						}
 					}
 				}
 			}
@@ -220,6 +228,7 @@ public class Announcer extends Base implements Runnable {
 		for (int i = 0; i < groupLocks.size(); i++) {
 			Object group = groupLocks.get(i);
 			synchronized (group) {
+				readyEnterClassroom = true;
 				group.notifyAll();
 			}
 		}
@@ -230,8 +239,14 @@ public class Announcer extends Base implements Runnable {
 	 * announcer that they are ready to start the written exam.
 	 */
 	public void askForSeat() {
-		synchronized (seats) {
+		synchronized (this) {
 			seatCounter++;
+			if (seatCounter == numContestants) {
+				debug("All contestants have seats.");
+				notify();
+			}
+		}
+		synchronized (seats) {
 			if (seatCounter < numContestants) {
 				while (true) {
 					try {
@@ -246,11 +261,6 @@ public class Announcer extends Base implements Runnable {
 							break;
 						}
 					}
-				}
-			} else {
-				debug("All contestants have seats.");
-				synchronized (this) {
-					notify();
 				}
 			}
 		}
@@ -298,14 +308,16 @@ public class Announcer extends Base implements Runnable {
 			}
 		}
 		synchronized (ctt) {
-			while (true) {
-				try {
-					ctt.wait();
-					break;
-				} catch (InterruptedException e) {
-					warn("waiting for grade is interrupted.");
-					if (ctt.getExamScore() > 0) {
+			if (ctt.getExamScore() == 0) {
+				while (true) {
+					try {
+						ctt.wait();
 						break;
+					} catch (InterruptedException e) {
+						warn("waiting for grade is interrupted.");
+						if (ctt.getExamScore() > 0) {
+							break;
+						}
 					}
 				}
 			}
@@ -374,6 +386,7 @@ public class Announcer extends Base implements Runnable {
 
 	/**
 	 * Winners claim that they are ready for the game
+	 * 
 	 * @param id
 	 */
 	public void readyForGame(int id) {
@@ -414,7 +427,7 @@ public class Announcer extends Base implements Runnable {
 	}
 
 	/**
-	 * Thread run method. 
+	 * Thread run method.
 	 */
 	@Override
 	public void run() {
