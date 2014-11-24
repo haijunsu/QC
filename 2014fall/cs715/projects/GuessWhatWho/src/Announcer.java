@@ -15,7 +15,7 @@ public class Announcer extends Base implements Runnable {
 	/**
 	 * Locks for all groups
 	 */
-	private List<Object> groupLocks = new ArrayList<Object>();
+	private List<GroupLock> groupLocks = new ArrayList<GroupLock>();
 
 	/**
 	 * Queue that Contestants are waiting for grade.
@@ -61,12 +61,12 @@ public class Announcer extends Base implements Runnable {
 	/**
 	 * Condition value. Identity how many contestants have joined group.
 	 */
-	private int readyGroups = 0;
+	private int readyGroupsNum = 0;
 
 	/**
-	 * Condition value. Ready to enter classroom.
+	 * Condition value. Ready groups.
 	 */
-	private boolean readyEnterClassroom = false;
+	private List<GroupLock> readyGroups = new ArrayList<GroupLock>();
 
 	/**
 	 * Condition value. Identity how many contestants have seats.
@@ -113,7 +113,9 @@ public class Announcer extends Base implements Runnable {
 		debug("total group locks: " + totalGroupLocks);
 		for (int i = 0; i < totalGroupLocks; i++) {
 			// create group locks
-			groupLocks.add(new Object());
+			GroupLock lock = new GroupLock();
+			lock.setId(i);
+			groupLocks.add(lock);
 		}
 	}
 
@@ -160,19 +162,22 @@ public class Announcer extends Base implements Runnable {
 	 * Let contestants to join a group
 	 */
 	public void joinGroup() {
-		Object group = groupLocks.get(currentGroup);
+		GroupLock group = null;
 		synchronized (this) {
+			group = groupLocks.get(currentGroup);
 			++currentGroupSize;
 			if (currentGroupSize == this.roomCapacity
 					|| (roomCapacity * currentGroup + currentGroupSize == numContestants)) {
+				info("Last member in group " + group.getId());
 				// current group is ready.
-				askEnterClassroom();
+				readyGroups.add(group);
+				notify();
 				currentGroupSize = 0;
 				++currentGroup;
 			}
 		}
 		synchronized (group) {
-			if (!readyEnterClassroom) {
+			if (!group.isNotified()) {
 				while (true) {
 					try {
 						group.wait();
@@ -182,7 +187,7 @@ public class Announcer extends Base implements Runnable {
 						e.printStackTrace();
 						// if miss signal, it needs to check condition again to
 						// determine to exit or continue wait.
-						if (readyEnterClassroom) {
+						if (group.isNotified()) {
 							break;
 						}
 					}
@@ -191,46 +196,41 @@ public class Announcer extends Base implements Runnable {
 		}
 	}
 
-	/**
-	 * Groups are ready and waiting from enter classroom.
-	 */
-	public synchronized void askEnterClassroom() {
-		++readyGroups;
-		info("Group " + readyGroups
-				+ " is ready. Waiting for notify from Announcer.");
-		if (readyGroups == groupLocks.size()) {
-			notify();
-		}
-	}
 
 	/**
 	 * Notify groups to enter classroom
 	 */
 	public synchronized void givePermissionEnterClassroom() {
 		info("Wait for groups ...");
-		if (readyGroups < groupLocks.size()) {
-			while (true) {
-				try {
-					wait();
-					break;
-				} catch (InterruptedException e) {
-					warn("Waiting group is interrupted.");
-					e.printStackTrace();
-					// if miss signal, it needs to check condition again to
-					// determine to exit or continue wait.
-					if (readyGroups == groupLocks.size()) {
+		while (readyGroupsNum < groupLocks.size()) {
+			if (readyGroups.isEmpty()) {
+				while (true) {
+					try {
+						wait();
 						break;
+					} catch (InterruptedException e) {
+						warn("Waiting group is interrupted.");
+						e.printStackTrace();
+						// if miss signal, it needs to check condition again to
+						// determine to exit or continue wait.
+						if (!readyGroups.isEmpty()) {
+							break;
+						}
 					}
 				}
 			}
-		}
-		info("Notify groups...");
-		for (int i = 0; i < groupLocks.size(); i++) {
-			Object group = groupLocks.get(i);
-			synchronized (group) {
-				readyEnterClassroom = true;
-				group.notifyAll();
+			debug("Notify group(s)...");
+			int readyGroupsSize = readyGroups.size();
+			for (int i = 0; i < readyGroupsSize; i++) {
+				GroupLock group = readyGroups.remove(0);
+				synchronized (group) {
+					++readyGroupsNum;
+					group.setNotified(true);
+					info("Notify group " + group.getId() + " ready to enter classroom.");
+					group.notifyAll();
+				}
 			}
+
 		}
 	}
 
@@ -242,7 +242,7 @@ public class Announcer extends Base implements Runnable {
 		synchronized (this) {
 			seatCounter++;
 			if (seatCounter == numContestants) {
-				debug("All contestants have seats.");
+				info("All contestants have seats.");
 				notify();
 			}
 		}

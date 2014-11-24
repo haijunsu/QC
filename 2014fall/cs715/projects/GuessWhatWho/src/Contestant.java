@@ -67,7 +67,7 @@ public class Contestant extends Base implements Runnable {
 		// build group
 		announcer.joinGroup();
 
-		info("Enter a classroom and ask for a seat");
+		info("Enter a classroom and take a seat");
 		// having a seat
 		announcer.askForSeat();
 
