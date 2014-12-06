@@ -2,7 +2,10 @@ package service;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
+import entity.Event;
+import entity.Schedule;
 import entity.User;
 
 /**
@@ -11,7 +14,7 @@ import entity.User;
  * @author Haijun Su Date Dec 5, 2014
  *
  */
-public interface AuthService {
+public interface AuthService extends Remote {
 
 	/**
 	 * Login function.
@@ -59,7 +62,7 @@ public interface AuthService {
 	 * Change user password. This function can be called by admin and regular
 	 * user.
 	 * 
-	 * RMI 2: Handle request to change password.
+	 * RMI 3: Handle request to change password.
 	 * 
 	 * @param userName
 	 * @param password
@@ -72,8 +75,9 @@ public interface AuthService {
 	/**
 	 * Change user password. This function only can be called by admin.
 	 * 
-	 * RMI 2: Handle request to change password.
+	 * RMI 3: Handle request to change password.
 	 * 
+	 * @param user is used to verify user role.
 	 * @param userName
 	 * @param password
 	 * @return success is true. fail is false
@@ -81,5 +85,50 @@ public interface AuthService {
 	 */
 	public boolean resetPassword(User user, String userName, String newPass)
 			throws RemoteException;
+	
+	/**
+	 * RMI 4 Handle request to list all user accounts. Only can be called by admin.
+	 * 
+	 * @param user is used to verify user role
+	 * @return
+	 * @throws RemoteException
+	 */
+	public List<User> listAccounts(User user) throws RemoteException;
+	
+	/**
+	 * RMI 5 Handle request to display schedule
+	 * @param user
+	 * @return
+	 * @throws RemoteException
+	 */
+	public Schedule getScheduleByUser(User user) throws RemoteException;
+	
+	/**
+	 * RMI 6 Handle request to add an event to the schedule.
+	 * @param user
+	 * @param event
+	 * @return
+	 * @throws RemoteException
+	 */
+	public boolean addEvent(User user, Event event) throws RemoteException;
+
+	/**
+	 * RMI 7 Handle request to edit an event from the schedule.
+	 * @param user
+	 * @param event
+	 * @return
+	 * @throws RemoteException
+	 */
+	public boolean updateEvent(User user, Event event) throws RemoteException;
+
+	/**
+	 * RMI 8 Handle request to delete an event from the schedule.
+	 * @param user
+	 * @param event
+	 * @return
+	 * @throws RemoteException
+	 */
+	public boolean removeEvent(User user, Event event) throws RemoteException;
+	
 
 }
