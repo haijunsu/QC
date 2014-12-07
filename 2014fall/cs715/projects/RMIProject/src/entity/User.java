@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Haijun Su Date Dec 4, 2014
  *
  */
-public class User implements Serializable {
+public class User implements Serializable, Comparable<User> {
 
 	/**
 	 * SerialVersionUID
@@ -42,7 +42,6 @@ public class User implements Serializable {
 		this.role = role;
 	}
 
-	
 	public String getUsername() {
 		return username;
 	}
@@ -97,6 +96,11 @@ public class User implements Serializable {
 	public String toString() {
 		return "User [username=" + username + ", password=" + password
 				+ ", role=" + role + "]";
+	}
+
+	@Override
+	public int compareTo(User o) {
+		return username.compareTo(o.getUsername());
 	}
 
 }

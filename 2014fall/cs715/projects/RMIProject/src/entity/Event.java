@@ -13,6 +13,18 @@ import utils.Utilities;
  */
 public class Event implements Comparable<Event>, Serializable {
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
 	/**
 	 * serialVersionUID
 	 */

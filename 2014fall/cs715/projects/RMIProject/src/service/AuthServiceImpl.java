@@ -1,9 +1,12 @@
 package service;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import utils.Logger;
 import entity.Event;
@@ -16,18 +19,22 @@ import entity.User.UserRole;
  *
  */
 public class AuthServiceImpl implements AuthService {
-	
+
 	private static Logger logger = Logger.getLogger(AuthServiceImpl.class);
-	
+
+	private static final AtomicInteger idGen = new AtomicInteger(0);
+
 	private static Map<String, User> userMap = new HashMap<String, User>();
 
+	private static Map<String, Schedule> userSchedule = new HashMap<String, Schedule>();
+
 	/**
-	 * 
+	 * Contruct authtication service
 	 */
 	public AuthServiceImpl() {
 		// init admin user
 		User admin = new User("admin", "admin", UserRole.ADMIN);
-		userMap.put(admin.getUsername().toUpperCase(), admin);
+		userMap.put(admin.getUsername(), admin);
 	}
 
 	/*
@@ -37,15 +44,17 @@ public class AuthServiceImpl implements AuthService {
 	 */
 	@Override
 	public User login(String userName, String password) throws RemoteException {
-		logger.debug("username=" + userName);
-		User user = userMap.get(userName.toUpperCase());
+		logger.debug("login() - username=" + userName);
+		User user = userMap.get(userName);
 		if (user != null) {
-			logger.debug("Checking password...");
+			logger.debug("login() - Checking password...");
 			if (user.getPassword().equals(password)) {
+				logger.debug("login() - " + userName + " log on.");
 				return user;
 			}
 		}
-		return user;
+		logger.debug("login() - " + userName + " login fail.");
+		return null;
 	}
 
 	/*
@@ -57,8 +66,16 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public boolean createAccount(String userName, String password)
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+		logger.debug("createAccount() - username=" + userName);
+		if (userName == null || userName.trim().equals("")) {
+			logger.error("createAccount() - Cannot create user without username.");
+			return false;
+		}
+		User user = new User(userName, password, UserRole.USER);
+		userMap.put(user.getUsername(), user);
+		logger.debug("createAccount() - Create user success. username="
+				+ userName);
+		return true;
 	}
 
 	/*
@@ -68,8 +85,20 @@ public class AuthServiceImpl implements AuthService {
 	 */
 	@Override
 	public boolean deleteAccount(String userName) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+		logger.debug("deleteAccount() - username=" + userName);
+		if (userName == null) {
+			logger.error("deleteAccount() - Can't delete account because username is null.");
+			return false;
+		}
+		User user = userMap.get(userName);
+		if (user == null) {
+			logger.error("deleteAccount() - Can't delete account because user doesn't exist.");
+			return false;
+		}
+		userMap.remove(user.getUsername());
+		logger.debug("deleteAccount() - User has been removed. username = "
+				+ userName);
+		return true;
 	}
 
 	/*
@@ -81,8 +110,24 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public boolean changePassword(String userName, String oldPass,
 			String newPass) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+		logger.debug("changePassword() - username=" + userName);
+		if (userName == null) {
+			logger.error("changePassword() - Can't change password because username is null.");
+			return false;
+		}
+		User user = userMap.get(userName);
+		if (user == null) {
+			logger.error("changePassword() - Can't change password because user doesn't exist.");
+			return false;
+		}
+		if (user.getPassword().equals(oldPass)) {
+			logger.debug("changePassword() - User password has be changed.");
+			user.setPassword(newPass);
+			return true;
+		} else {
+			logger.error("changePassword() - Can't change password because user password doesn't match.");
+			return false;
+		}
 	}
 
 	/*
@@ -94,8 +139,23 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public boolean resetPassword(User user, String userName, String newPass)
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+		logger.debug("resetPassword() - username=" + userName);
+		if (user == null || user.getRole() != UserRole.ADMIN) {
+			logger.error("resetPassword() - Can't reset password because it needs admin role.");
+			return false;
+		}
+		if (userName == null) {
+			logger.error("resetPassword() - Can't reset password because username is null.");
+			return false;
+		}
+		User profile = userMap.get(userName);
+		if (profile == null) {
+			logger.error("resetPassword() - Can't reset password because user doesn't exist.");
+			return false;
+		}
+		logger.debug("resetPassword() - User password has be resetted.");
+		profile.setPassword(newPass);
+		return true;
 	}
 
 	/*
@@ -105,8 +165,14 @@ public class AuthServiceImpl implements AuthService {
 	 */
 	@Override
 	public List<User> listAccounts(User user) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		logger.debug("listAccounts() - user=" + user);
+		if (user == null || user.getRole() != UserRole.ADMIN) {
+			logger.error("listAccounts() - Can't list accounts because it needs admin role.");
+			return null;
+		}
+		List<User> accounts = new ArrayList<User>(userMap.values());
+		Collections.sort(accounts);
+		return accounts;
 	}
 
 	/*
@@ -116,8 +182,12 @@ public class AuthServiceImpl implements AuthService {
 	 */
 	@Override
 	public Schedule getScheduleByUser(User user) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		logger.debug("getScheduleByUser() - user=" + user);
+		if (user == null) {
+			logger.error("getScheduleByUser() - Can't get user's schedule because user is null.");
+			return null;
+		}
+		return userSchedule.get(user.getUsername());
 	}
 
 	/*
@@ -127,8 +197,16 @@ public class AuthServiceImpl implements AuthService {
 	 */
 	@Override
 	public boolean addEvent(User user, Event event) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+		logger.debug("addEvent() - user=" + user);
+		if (user == null) {
+			logger.error("addEvent() - Can't add user's event because user is null.");
+			return false;
+		}
+		Schedule schedule = userSchedule.get(user.getUsername());
+		event.setId(idGen.incrementAndGet());
+		logger.debug("addEvent() - event=" + event);
+		schedule.addEvent(event);
+		return true;
 	}
 
 	/*
@@ -138,8 +216,18 @@ public class AuthServiceImpl implements AuthService {
 	 */
 	@Override
 	public boolean updateEvent(User user, Event event) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+		logger.debug("updateEvent() - user=" + user);
+		if (user == null) {
+			logger.error("updateEvent() - Can't update user's event because user is null.");
+			return false;
+		}
+		Schedule schedule = userSchedule.get(user.getUsername());
+		if (schedule == null) {
+			logger.error("updateEvent() - Can't update user's event because user's schedule is null.");
+			return false;
+		}
+		schedule.updateEvent(event);
+		return true;
 	}
 
 	/*
@@ -149,8 +237,18 @@ public class AuthServiceImpl implements AuthService {
 	 */
 	@Override
 	public boolean removeEvent(User user, Event event) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+		logger.debug("removeEvent() - user=" + user);
+		if (user == null) {
+			logger.error("removeEvent() - Can't remove user's event because user is null.");
+			return false;
+		}
+		Schedule schedule = userSchedule.get(user.getUsername());
+		if (schedule == null) {
+			logger.error("updateEvent() - Can't update user's event because user's schedule is null.");
+			return false;
+		}
+		schedule.removeEvent(event);
+		return true;
 	}
 
 }
