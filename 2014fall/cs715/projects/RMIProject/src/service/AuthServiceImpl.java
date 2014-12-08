@@ -92,7 +92,7 @@ public class AuthServiceImpl implements AuthService {
 			logger.error("createAccount() - User already exists.");
 			return false;
 		}
-		User user = new User(userName, password, UserRole.USER);
+		User user = new User(userName, password, UserRole.REGULAR);
 		userMap.put(user.getUsername(), user);
 		logger.debug("createAccount() - Create user success. username="
 				+ userName);

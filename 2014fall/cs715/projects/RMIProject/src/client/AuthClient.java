@@ -70,10 +70,14 @@ public class AuthClient {
 			profile = service.login(username, password);
 			logger.debug("authentication result: " + profile);
 			if (profile == null) {
-				logger.info("Login fail and exit.");
-				System.out.println("Login fail.");
+				// Login fail and exit
+				System.out.println("User name or password is invalid.");
+				System.out.println("Bye.");
 				System.exit(0);
 			}
+			// display welcome message
+			System.out.println("Welcome " + username + "! You are "
+					+ profile.getRole() + " user and you can do following options.");
 			while (true) {
 				System.out.println("==================================");
 				if (UserRole.ADMIN == profile.getRole()) {

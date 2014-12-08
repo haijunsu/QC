@@ -25,7 +25,7 @@ public class User implements Serializable, Comparable<User> {
 	 *
 	 */
 	public static enum UserRole {
-		ADMIN, USER
+		ADMIN, REGULAR
 	};
 
 	/**
