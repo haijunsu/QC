@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
+ * 
  * User's schedule
  * 
  * Date Dec 4, 2014
@@ -68,6 +69,7 @@ public class Schedule implements Serializable {
 	 * @param event
 	 * @return
 	 */
+
 	public boolean removeEvent(Event event) {
 		return this.events.remove(event);
 	}

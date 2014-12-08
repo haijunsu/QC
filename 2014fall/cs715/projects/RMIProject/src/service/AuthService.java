@@ -89,30 +89,26 @@ public interface AuthService extends Remote {
 	 */
 	public boolean resetPassword(User user, String userName, String newPass)
 			throws RemoteException;
-
+	
 	/**
-	 * RMI 4 Handle request to list all user accounts. Only can be called by
-	 * admin.
+	 * RMI 4 Handle request to list all user accounts. Only can be called by admin.
 	 * 
-	 * @param user
-	 *            is used to verify user role
+	 * @param user is used to verify user role
 	 * @return
 	 * @throws RemoteException
 	 */
 	public List<User> listAccounts(User user) throws RemoteException;
-
+	
 	/**
 	 * RMI 5 Handle request to display schedule
-	 * 
 	 * @param user
 	 * @return
 	 * @throws RemoteException
 	 */
 	public Schedule getScheduleByUser(User user) throws RemoteException;
-
+	
 	/**
 	 * RMI 6 Handle request to add an event to the schedule.
-	 * 
 	 * @param user
 	 * @param event
 	 * @return
@@ -122,7 +118,6 @@ public interface AuthService extends Remote {
 
 	/**
 	 * RMI 7 Handle request to edit an event from the schedule.
-	 * 
 	 * @param user
 	 * @param event
 	 * @return
@@ -132,7 +127,6 @@ public interface AuthService extends Remote {
 
 	/**
 	 * RMI 8 Handle request to delete an event from the schedule.
-	 * 
 	 * @param user
 	 * @param event
 	 * @return

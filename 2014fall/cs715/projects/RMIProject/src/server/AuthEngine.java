@@ -60,6 +60,5 @@ public class AuthEngine {
 			logger.error("AuthEngine exception: " + e.getMessage());
 			e.printStackTrace();
 		}
-
 	}
 }
