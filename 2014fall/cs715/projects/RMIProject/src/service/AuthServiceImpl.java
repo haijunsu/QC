@@ -15,24 +15,41 @@ import entity.User;
 import entity.User.UserRole;
 
 /**
- * @author Haijun Su Date Dec 5, 2014
- *
+ * Authentication service implementation Date
+ * 
+ * 
+ * Dec 5, 2014
+ * 
+ * @author Haijun Su
+ * @author Youchen Ren
  */
 public class AuthServiceImpl implements AuthService {
 
+	/**
+	 * logger adapter
+	 */
 	private static Logger logger = Logger.getLogger(AuthServiceImpl.class);
 
+	/**
+	 * Id generator
+	 */
 	private static final AtomicInteger idGen = new AtomicInteger(0);
 
+	/**
+	 * User map
+	 */
 	private static Map<String, User> userMap = new HashMap<String, User>();
 
+	/**
+	 * User schedule map
+	 */
 	private static Map<String, Schedule> userSchedule = new HashMap<String, Schedule>();
 
 	/**
-	 * Contruct authtication service
+	 * Construct authentication service
 	 */
 	public AuthServiceImpl() {
-		// init admin user
+		// initial admin user
 		User admin = new User("admin", "admin", UserRole.ADMIN);
 		userMap.put(admin.getUsername(), admin);
 	}
@@ -49,7 +66,7 @@ public class AuthServiceImpl implements AuthService {
 		if (user != null) {
 			logger.debug("login() - Checking password...");
 			if (user.getPassword().equals(password)) {
-				logger.debug("login() - " + userName + " log on.");
+				logger.debug("login() - " + userName + " logged on.");
 				return user;
 			}
 		}
@@ -69,6 +86,10 @@ public class AuthServiceImpl implements AuthService {
 		logger.debug("createAccount() - username=" + userName);
 		if (userName == null || userName.trim().equals("")) {
 			logger.error("createAccount() - Cannot create user without username.");
+			return false;
+		}
+		if (userMap.get(userName) != null) {
+			logger.error("createAccount() - User already exists.");
 			return false;
 		}
 		User user = new User(userName, password, UserRole.USER);
@@ -202,7 +223,16 @@ public class AuthServiceImpl implements AuthService {
 			logger.error("addEvent() - Can't add user's event because user is null.");
 			return false;
 		}
+		User tu = userMap.get(user.getUsername());
+		if (tu == null) {
+			logger.error("addEvent() - Can't add user's event because user doesn't exist.");
+			return false;
+		}
 		Schedule schedule = userSchedule.get(user.getUsername());
+		if (schedule == null) {
+			schedule = new Schedule(user.getUsername());
+			userSchedule.put(user.getUsername(), schedule);
+		}
 		event.setId(idGen.incrementAndGet());
 		logger.debug("addEvent() - event=" + event);
 		schedule.addEvent(event);
@@ -249,6 +279,11 @@ public class AuthServiceImpl implements AuthService {
 		}
 		schedule.removeEvent(event);
 		return true;
+	}
+
+	@Override
+	public User getUser(String username) throws RemoteException {
+		return userMap.get(username);
 	}
 
 }

@@ -6,24 +6,14 @@ import java.util.Date;
 import utils.Utilities;
 
 /**
- * Event
+ * Event entity
  * 
- * @author Haijun Su Date Dec 4, 2014
+ * Date Dec 4, 2014
  *
+ * @author Haijun Su
+ * @author Youchen Ren
  */
 public class Event implements Comparable<Event>, Serializable {
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getStartTime() {
-		return startTime;
-	}
 
 	/**
 	 * serialVersionUID
@@ -36,9 +26,9 @@ public class Event implements Comparable<Event>, Serializable {
 	private int id;
 
 	/**
-	 * Event description
+	 * Event title
 	 */
-	private String description;
+	private String title;
 
 	/**
 	 * Event date
@@ -46,59 +36,61 @@ public class Event implements Comparable<Event>, Serializable {
 	private Date eventDate;
 
 	/**
-	 * Event start time
+	 * default construct
 	 */
-	private String startTime;
+	public Event() {
+	}
 
 	/**
-	 * Event end time
-	 */
-	private String endTime;
-
-	/**
-	 * All day time for the event
-	 */
-	private boolean allDay;
-
-	/**
-	 * Construct an event with time value
+	 * construct with id
 	 * 
-	 * @param description
-	 * @param eventDate
-	 * @param statTime
-	 * @param endTime
+	 * @param id
 	 */
-	public Event(int id, String description, Date eventDate, String statTime,
-			String endTime) {
+	public Event(int id) {
 		super();
 		this.id = id;
-		this.description = description;
-		this.eventDate = eventDate;
-		this.startTime = statTime;
-		this.endTime = endTime;
 	}
 
 	/**
-	 * Construct an event with all day value
+	 * Construct an event with title and time values
 	 * 
-	 * @param description
+	 * @param title
 	 * @param eventDate
-	 * @param allDay
 	 */
-	public Event(int id, String description, Date eventDate, boolean allDay) {
+	public Event(String title, Date eventDate) {
+		super();
+		this.title = title;
+		this.eventDate = eventDate;
+	}
+
+	/**
+	 * construct with id, title and time values
+	 * 
+	 * @param id
+	 * @param title
+	 * @param eventDate
+	 */
+	public Event(int id, String title, Date eventDate) {
 		super();
 		this.id = id;
-		this.description = description;
+		this.title = title;
 		this.eventDate = eventDate;
-		this.allDay = allDay;
 	}
 
-	public String getDescription() {
-		return description;
+	public int getId() {
+		return id;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public Date getEventDate() {
@@ -109,60 +101,13 @@ public class Event implements Comparable<Event>, Serializable {
 		this.eventDate = eventDate;
 	}
 
-	public String getStatrTime() {
-		return startTime;
-	}
-
-	public void setStartTime(String startTime) {
-		this.startTime = startTime;
-	}
-
-	public String getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(String endTime) {
-		this.endTime = endTime;
-	}
-
-	public boolean isAllDay() {
-		return allDay;
-	}
-
-	public void setAllDay(boolean allDay) {
-		this.allDay = allDay;
-	}
-
 	@Override
 	public int compareTo(Event evt) {
 		// parameter should not be a null object
 		if (evt == null) {
 			return -1;
 		}
-		int result = eventDate.compareTo(evt.eventDate);
-		if (result != 0) {
-			return result;
-		}
-		// two dates are equal and compare start time.
-		if (!allDay) {
-			// all day event, ol
-			result = startTime.compareTo(evt.getStatrTime());
-		}
-		return result;
-	}
-
-	@Override
-	public String toString() {
-		String evtString = "EventId=" + this.id;
-		if (allDay) {
-			evtString = " eventDate=" + Utilities.formatDate(eventDate)
-					+ ", allDay=" + allDay + ", description=" + description;
-		} else {
-			evtString = "eventDate=" + Utilities.formatDate(eventDate)
-					+ ", startTime=" + startTime + ", endTime=" + endTime
-					+ ", description=" + description;
-		}
-		return evtString;
+		return eventDate.compareTo(evt.eventDate);
 	}
 
 	@Override
@@ -187,5 +132,10 @@ public class Event implements Comparable<Event>, Serializable {
 		return true;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Event [id=" + id + ", title=" + title + ", eventDate="
+				+ Utilities.formatDate(eventDate) + "]";
+	}
+
 }

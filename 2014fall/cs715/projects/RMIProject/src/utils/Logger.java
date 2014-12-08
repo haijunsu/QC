@@ -2,11 +2,14 @@ package utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 /**
  * Logger utility
- * @author Haijun Su
+ * 
  * Date Dec 4, 2014
- *
+ * 
+ * @author Haijun Su
+ * @author Youchen Ren
  */
 public class Logger {
 

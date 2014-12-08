@@ -5,8 +5,10 @@ import java.io.Serializable;
 /**
  * User information
  * 
- * @author Haijun Su Date Dec 4, 2014
+ * Date Dec 4, 2014
  *
+ * @author Haijun Su
+ * @author Youchen Ren
  */
 public class User implements Serializable, Comparable<User> {
 
@@ -15,26 +17,67 @@ public class User implements Serializable, Comparable<User> {
 	 */
 	private static final long serialVersionUID = -3363120264501521428L;
 
+	/**
+	 * User's role type
+	 * 
+	 * @author Haijun Su
+	 * @author Youchen Ren Date Dec 7, 2014
+	 *
+	 */
 	public static enum UserRole {
 		ADMIN, USER
 	};
 
+	/**
+	 * User name
+	 */
 	private String username;
 
+	/**
+	 * User password
+	 */
 	private String password;
 
+	/**
+	 * User role
+	 */
 	private UserRole role;
 
+	/**
+	 * Default construct
+	 */
 	public User() {
-
 	}
 
+	/**
+	 * Construct with username
+	 * 
+	 * @param username
+	 */
+	public User(String username) {
+		super();
+		this.username = username;
+	}
+
+	/**
+	 * Construct with username and role
+	 * 
+	 * @param username
+	 * @param role
+	 */
 	public User(String username, UserRole role) {
 		super();
 		this.username = username;
 		this.role = role;
 	}
 
+	/**
+	 * Construct with username, password and role
+	 * 
+	 * @param username
+	 * @param password
+	 * @param role
+	 */
 	public User(String username, String password, UserRole role) {
 		super();
 		this.username = username;
