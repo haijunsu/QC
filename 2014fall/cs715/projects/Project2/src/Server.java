@@ -39,7 +39,7 @@ public class Server {
 			System.out
 					.println("Usage: \n\tjava Server [-port <num>] [-rqvpgc <num>] [-log <num>]");
 
-			System.out.println("\t\t-port\tServer port");
+			System.out.println("\t\t-port\tServer port. Default is " + port);
 			System.out.println();
 			System.out.println("\t\t-r\tNumber of rounds in the game");
 			System.out.println("\t\t-q\tNumber of questions per round");
@@ -48,7 +48,8 @@ public class Server {
 			System.out.println("\t\t-g\tRoom capacity (group size)");
 			System.out.println("\t\t-c\tNumber of Contestants");
 			System.out.println();
-			System.out.println("\t\t-log\tlog level");
+			System.out.println("\t\t-log\tlog level. Default level (warn). "
+					+ "Debug levels: 0-Debug, 1-Info, 2-Warn, 3-Error");
 			System.exit(1);
 
 		}

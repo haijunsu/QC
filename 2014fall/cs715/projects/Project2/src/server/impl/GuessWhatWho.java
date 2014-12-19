@@ -218,7 +218,7 @@ public class GuessWhatWho {
 		if (args.length % 2 != 0) {
 			// usage
 			System.out
-					.println("Usage: \n\tjava server.impl.GuessWhatWho [-port <num>] [-rqvpgc <num>] [-log <num>]");
+					.println("Usage: \n\tjava server.impl.GuessWhatWho [-rqvpgc <num>] [-log <num>]");
 
 			System.out.println("\t\t-r\tNumber of rounds in the game");
 			System.out.println("\t\t-q\tNumber of questions per round");

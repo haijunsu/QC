@@ -119,7 +119,7 @@ public class Proj2Client {
 				+ System.lineSeparator()
 				+ "* This is porject 2 of course CS715 in Fall 2014.      *"
 				+ System.lineSeparator()
-				+ "* Students is Haijun Su                                *"
+				+ "* Student is Haijun Su                                *"
 				+ System.lineSeparator()
 				+ "********************************************************";
 
