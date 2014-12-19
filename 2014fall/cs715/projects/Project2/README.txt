@@ -1,5 +1,5 @@
-New codes are in default package, server package, client package and common 
-package. If server and client are running on different machines, the common
+New server/client codes are in default package, server package, client package and 
+common package. If server and client are running on different machines, the common
 package needs be included on both sides (Server/Client).
 Usage:
 java Server [-port <num>] [-rqvpgc <num>] [-log <num>]
