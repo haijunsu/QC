@@ -24,7 +24,7 @@ java Server [-port <num>] [-rqvpgc <num>] [-log <num>]
 				2-Warn, 3-Error
 		
 
-Project 1 codes are in package server.impl. Only add some methods to support 
+Project 1 codes are in package server.impl. Only added some methods to support 
 running on server. It still can be run independently by following command.
 	java server.impl.GuessWhatWho [-rqvpgc <num>] [-log <num>]
 		-r	Number of rounds in the game
