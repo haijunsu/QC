@@ -10,7 +10,7 @@ import java.util.Random;
  */
 public class Utility {
 	public static void main(String[] args) {
-		double[] testVs = random(10000);
+		double[] testVs = randomGaussian(10000);
 		int k = 0;
 		for (int i = 0; i < testVs.length; i++) {
 			if (testVs[i] > 1 || testVs[i] < 0) {
@@ -22,6 +22,15 @@ public class Utility {
 		System.out.println(k);
 	}
 
+	public static double[] randomUniform(int size) {
+		double[] values = new double[size];
+		Random rd = new Random();
+		for (int i = 0; i < size; i++) {
+			values[i] = rd.nextDouble();
+		}
+		return values;
+	}
+	
 	/**
 	 * generate random number between 0, 1 with normal distribution (mean=0.5,
 	 * deviation=0.5)
@@ -29,8 +38,8 @@ public class Utility {
 	 * @param size
 	 * @return
 	 */
-	public static double[] random(int size) {
-		return random(size, 0.5, 0.5);
+	public static double[] randomGaussian(int size) {
+		return randomGaussian(size, 0.5, 0.5);
 	}
 
 	/**
@@ -41,7 +50,7 @@ public class Utility {
 	 * @param deviation
 	 * @return
 	 */
-	public static double[] random(int size, double mean, double deviation) {
+	public static double[] randomGaussian(int size, double mean, double deviation) {
 		double[] values = new double[size];
 		Random rd = new Random();
 		for (int i = 0; i < size; i++) {
