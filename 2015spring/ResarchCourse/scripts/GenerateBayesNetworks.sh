@@ -14,25 +14,75 @@
 # Saved file format (xml is the default format): [-format xml] or [-format java]
 # Name of saved file: [-fName name]
 
-# nNodes = 20
-java -cp ../classes:../libs/embayes.jar:../libs/colt.jar BNGenerator -format java -nNodes 20 -nBNs 10 -fName Bn20Nodes
+#Default parameter value
+default() {
+    nNode=20
+    maxDegree=10
+    maxArcs=100
+    maxIW=2
+    maxVal=2
+    nNBs=20
+    fName=NB20a
 
-# nNodes = 25
-java -cp ../classes:../libs/embayes.jar:../libs/colt.jar BNGenerator -format java -nNodes 25 -nBNs 10 -fName Bn25Nodes
+    totalRecords=500
+}
+genData() {
+    java -cp ../classes:../libs/embayes.jar:../libs/colt.jar BNGenerator -format java -nNodes $nNode -maxDegree $maxDegree -maxArcs $maxArcs -maxIW $maxIW -maxVal $maxVal -nBNs $nNBs -fName $fName
 
-# nNodes = 30
-java -cp ../classes:../libs/embayes.jar:../libs/colt.jar BNGenerator -format java -nNodes 30 -nBNs 10 -fName Bn30Nodes
+    javac -cp ../classes:../libs/embayes.jar:../libs/colt.jar *.java -d ../classes
+    rm *.java
+    java -cp ../classes:../libs/embayes.jar:../libs/colt.jar ParseBayesNet $fName $nNBs $totalRecords
+    default
+}
 
-# nNodes = 35
-java -cp ../classes:../libs/embayes.jar:../libs/colt.jar BNGenerator -format java -nNodes 35 -nBNs 10 -fName Bn35Nodes
+# Generate data with default setting
+default
+genData
 
+#generate 1000 records
+totalRecords=1000
+fName=NB20b
+genData
 
-# nNodes = 40
-java -cp ../classes:../libs/embayes.jar:../libs/colt.jar BNGenerator -format java -nNodes 35 -nBNs 10 -fName Bn40Nodes
+# Generate data with nNode=25
+nNode=25
+fName=NB25a
+genData
+# Generate data with nNode=25
+nNode=25
+totalRecords=1000
+fName=NB25b
+genData
 
-mv *.java ../genSrc
-cd ../genSrc
-javac -cp ../classes:../libs/*.jar *.java -d ../classes
+# Generate data with nNode=30
+nNode=30
+fName=NB30a
+genData
 
+# Generate data with nNode=30
+nNode=30
+totalRecords=1000
+fName=NB30b
+genData
 
+# Generate data with nNode=35
+nNode=35
+fName=NB35a
+genData
 
+# Generate data with nNode=35
+nNode=35
+totalRecords=1000
+fName=NB35b
+genData
+
+# Generate data with nNode=40
+nNode=40
+fName=NB40a
+genData
+
+# Generate data with nNode=40
+nNode=40
+totalRecords=1000
+fName=NB40b
+genData

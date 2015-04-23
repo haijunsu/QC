@@ -1,0 +1,1461 @@
+Total records per data file: 500
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 240 for nNodes=20 and maxDegree=24
+--
+--
+Total records per data file: 500
+
+
+Note that the value maxArcs=300 has no sense.
+Because the maximum possible number of arcs is 240 for nNodes=20 and maxDegree=24
+--
+--
+Total records per data file: 1000
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+Total records per data file: 1000
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+Total records per data file: 1000
+
+
+Note that the value maxArcs=175 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+Total records per data file: 1000
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+Total records per data file: 1000
+
+
+Note that the value maxArcs=225 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+Total records per data file: 1000
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+Total records per data file: 1000
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+Total records per data file: 1000
+
+
+Note that the value maxArcs=175 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+Total records per data file: 1000
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+Total records per data file: 1000
+
+
+Note that the value maxArcs=225 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+Total records per data file: 1000
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+Total records per data file: 1000
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+Total records per data file: 1000
+
+
+Note that the value maxArcs=175 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+Total records per data file: 1000
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+Total records per data file: 1000
+
+
+Note that the value maxArcs=225 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+NB20D05A100I2V2data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A100I2V3data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A100I5V2data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A100I5V3data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A100I8V2data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A100I8V3data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A150I2V2data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A150I2V3data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A150I5V2data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A150I5V3data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A150I8V2data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A150I8V3data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A200I2V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A200I2V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A200I5V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A200I5V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A200I8V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A200I8V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A250I2V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A250I2V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A250I5V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A250I5V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A250I8V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D05A250I8V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 50 for nNodes=20 and maxDegree=5
+--
+--
+NB20D10A150I2V2data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 100 for nNodes=20 and maxDegree=10
+--
+--
+NB20D10A150I2V3data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 100 for nNodes=20 and maxDegree=10
+--
+--
+NB20D10A150I5V2data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 100 for nNodes=20 and maxDegree=10
+--
+--
+NB20D10A150I5V3data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 100 for nNodes=20 and maxDegree=10
+--
+--
+NB20D10A150I8V2data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 100 for nNodes=20 and maxDegree=10
+--
+--
+NB20D10A150I8V3data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 100 for nNodes=20 and maxDegree=10
+--
+--
+NB20D10A200I2V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 100 for nNodes=20 and maxDegree=10
+--
+--
+NB20D10A200I2V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 100 for nNodes=20 and maxDegree=10
+--
+--
+NB20D10A200I5V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 100 for nNodes=20 and maxDegree=10
+--
+--
+NB20D10A200I5V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 100 for nNodes=20 and maxDegree=10
+--
+--
+NB20D10A200I8V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 100 for nNodes=20 and maxDegree=10
+--
+--
+NB20D10A200I8V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 100 for nNodes=20 and maxDegree=10
+--
+--
+NB20D10A250I2V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 100 for nNodes=20 and maxDegree=10
+--
+--
+NB20D10A250I2V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 100 for nNodes=20 and maxDegree=10
+--
+--
+NB20D10A250I5V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 100 for nNodes=20 and maxDegree=10
+--
+--
+NB20D10A250I5V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 100 for nNodes=20 and maxDegree=10
+--
+--
+NB20D10A250I8V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 100 for nNodes=20 and maxDegree=10
+--
+--
+NB20D10A250I8V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 100 for nNodes=20 and maxDegree=10
+--
+--
+NB20D15A200I2V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=20 and maxDegree=15
+--
+--
+NB20D15A200I2V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=20 and maxDegree=15
+--
+--
+NB20D15A200I5V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=20 and maxDegree=15
+--
+--
+NB20D15A200I5V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=20 and maxDegree=15
+--
+--
+NB20D15A200I8V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=20 and maxDegree=15
+--
+--
+NB20D15A200I8V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=20 and maxDegree=15
+--
+--
+NB20D15A250I2V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=20 and maxDegree=15
+--
+--
+NB20D15A250I2V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=20 and maxDegree=15
+--
+--
+NB20D15A250I5V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=20 and maxDegree=15
+--
+--
+NB20D15A250I5V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=20 and maxDegree=15
+--
+--
+NB20D15A250I8V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=20 and maxDegree=15
+--
+--
+NB20D15A250I8V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=20 and maxDegree=15
+--
+--
+NB20D20A250I2V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 200 for nNodes=20 and maxDegree=20
+--
+--
+NB20D20A250I2V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 200 for nNodes=20 and maxDegree=20
+--
+--
+NB20D20A250I5V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 200 for nNodes=20 and maxDegree=20
+--
+--
+NB20D20A250I5V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 200 for nNodes=20 and maxDegree=20
+--
+--
+NB20D20A250I8V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 200 for nNodes=20 and maxDegree=20
+--
+--
+NB20D20A250I8V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 200 for nNodes=20 and maxDegree=20
+--
+--
+NB25D05A100I2V2data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A100I2V3data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A100I5V2data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A100I5V3data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A100I8V2data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A100I8V3data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A150I2V2data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A150I2V3data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A150I5V2data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A150I5V3data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A150I8V2data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A150I8V3data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A200I2V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A200I2V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A200I5V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A200I5V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A200I8V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A200I8V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A250I2V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A250I2V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A250I5V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A250I5V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A250I8V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D05A250I8V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 62 for nNodes=25 and maxDegree=5
+--
+--
+NB25D10A150I2V2data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+NB25D10A150I2V3data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+NB25D10A150I5V2data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+NB25D10A150I5V3data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+NB25D10A150I8V2data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+NB25D10A150I8V3data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+NB25D10A200I2V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+NB25D10A200I2V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+NB25D10A200I5V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+NB25D10A200I5V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+NB25D10A200I8V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+NB25D10A200I8V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+NB25D10A250I2V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+NB25D10A250I2V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+NB25D10A250I5V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+NB25D10A250I5V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+NB25D10A250I8V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+NB25D10A250I8V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 125 for nNodes=25 and maxDegree=10
+--
+--
+NB25D15A200I2V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 187 for nNodes=25 and maxDegree=15
+--
+--
+NB25D15A200I2V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 187 for nNodes=25 and maxDegree=15
+--
+--
+NB25D15A200I5V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 187 for nNodes=25 and maxDegree=15
+--
+--
+NB25D15A200I5V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 187 for nNodes=25 and maxDegree=15
+--
+--
+NB25D15A200I8V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 187 for nNodes=25 and maxDegree=15
+--
+--
+NB25D15A200I8V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 187 for nNodes=25 and maxDegree=15
+--
+--
+NB25D15A250I2V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 187 for nNodes=25 and maxDegree=15
+--
+--
+NB25D15A250I2V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 187 for nNodes=25 and maxDegree=15
+--
+--
+NB25D15A250I5V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 187 for nNodes=25 and maxDegree=15
+--
+--
+NB25D15A250I5V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 187 for nNodes=25 and maxDegree=15
+--
+--
+NB25D15A250I8V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 187 for nNodes=25 and maxDegree=15
+--
+--
+NB25D15A250I8V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 187 for nNodes=25 and maxDegree=15
+--
+--
+NB30D05A100I2V2data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A100I2V3data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A100I5V2data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A100I5V3data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A100I8V2data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A100I8V3data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A150I2V2data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A150I2V3data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A150I5V2data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A150I5V3data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A150I8V2data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A150I8V3data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A200I2V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A200I2V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A200I5V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A200I5V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A200I8V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A200I8V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A250I2V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A250I2V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A250I5V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A250I5V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A250I8V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D05A250I8V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 75 for nNodes=30 and maxDegree=5
+--
+--
+NB30D10A200I2V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=30 and maxDegree=10
+--
+--
+NB30D10A200I2V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=30 and maxDegree=10
+--
+--
+NB30D10A200I5V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=30 and maxDegree=10
+--
+--
+NB30D10A200I5V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=30 and maxDegree=10
+--
+--
+NB30D10A200I8V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=30 and maxDegree=10
+--
+--
+NB30D10A200I8V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=30 and maxDegree=10
+--
+--
+NB30D10A250I2V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=30 and maxDegree=10
+--
+--
+NB30D10A250I2V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=30 and maxDegree=10
+--
+--
+NB30D10A250I5V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=30 and maxDegree=10
+--
+--
+NB30D10A250I5V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=30 and maxDegree=10
+--
+--
+NB30D10A250I8V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=30 and maxDegree=10
+--
+--
+NB30D10A250I8V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 150 for nNodes=30 and maxDegree=10
+--
+--
+NB30D15A250I2V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 225 for nNodes=30 and maxDegree=15
+--
+--
+NB30D15A250I2V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 225 for nNodes=30 and maxDegree=15
+--
+--
+NB30D15A250I5V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 225 for nNodes=30 and maxDegree=15
+--
+--
+NB30D15A250I5V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 225 for nNodes=30 and maxDegree=15
+--
+--
+NB30D15A250I8V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 225 for nNodes=30 and maxDegree=15
+--
+--
+NB30D15A250I8V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 225 for nNodes=30 and maxDegree=15
+--
+--
+NB35D05A100I2V2data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A100I2V3data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A100I5V2data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A100I5V3data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A100I8V2data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A100I8V3data
+
+
+Note that the value maxArcs=100 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A150I2V2data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A150I2V3data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A150I5V2data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A150I5V3data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A150I8V2data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A150I8V3data
+
+
+Note that the value maxArcs=150 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A200I2V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A200I2V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A200I5V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A200I5V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A200I8V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A200I8V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A250I2V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A250I2V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A250I5V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A250I5V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A250I8V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D05A250I8V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 87 for nNodes=35 and maxDegree=5
+--
+--
+NB35D10A200I2V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 175 for nNodes=35 and maxDegree=10
+--
+--
+NB35D10A200I2V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 175 for nNodes=35 and maxDegree=10
+--
+--
+NB35D10A200I5V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 175 for nNodes=35 and maxDegree=10
+--
+--
+NB35D10A200I5V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 175 for nNodes=35 and maxDegree=10
+--
+--
+NB35D10A200I8V2data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 175 for nNodes=35 and maxDegree=10
+--
+--
+NB35D10A200I8V3data
+
+
+Note that the value maxArcs=200 has no sense.
+Because the maximum possible number of arcs is 175 for nNodes=35 and maxDegree=10
+--
+--
+NB35D10A250I2V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 175 for nNodes=35 and maxDegree=10
+--
+--
+NB35D10A250I2V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 175 for nNodes=35 and maxDegree=10
+--
+--
+NB35D10A250I5V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 175 for nNodes=35 and maxDegree=10
+--
+--
+NB35D10A250I5V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 175 for nNodes=35 and maxDegree=10
+--
+--
+NB35D10A250I8V2data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 175 for nNodes=35 and maxDegree=10
+--
+--
+NB35D10A250I8V3data
+
+
+Note that the value maxArcs=250 has no sense.
+Because the maximum possible number of arcs is 175 for nNodes=35 and maxDegree=10

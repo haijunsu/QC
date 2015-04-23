@@ -19,8 +19,17 @@ import navy.Utility;
 public class ParseBayesNet {
 
 	public static void main(String[] args) {
-		for (int i = 1; i <= 10; i++) {
-			generateData("Bna" + i, 10000);
+		if (args.length != 3) {
+			System.out.println("Usage: java -cp ../classes:../libs/embayes.jar:../libs/colt.jar ParseBayesNet <prefixName> <totalFiles> <total records>");
+			System.exit(-1);
+		}
+		int totalFiles = Integer.parseInt(args[1]);
+		int totalRecords = Integer.parseInt(args[2]);
+		System.out.println("File's prefixName: " + args[0]);
+		System.out.println("Total files: " + totalFiles);
+		System.out.println("Total records per data file: " + totalRecords);
+		for (int i = 1; i <= totalFiles; i++) {
+			generateData(args[0].trim() + i, totalRecords);
 		}
 	}
 
@@ -63,7 +72,7 @@ public class ParseBayesNet {
 				}
 			}
 
-			FileWriter writer = new FileWriter("genData/" + fileName + "_" + recordsNum + ".csv");
+			FileWriter writer = new FileWriter("../genData/" + fileName + "_" + recordsNum + ".csv");
 			for (int i = 0; i < recordsNum; i++) {
 				Map<String, String> nodeVars = new HashMap<String, String>();
 				List<CategoricalVariable> computeQueue = new ArrayList<CategoricalVariable>();
@@ -77,7 +86,7 @@ public class ParseBayesNet {
 					record += "," + nodeVars.get("n" + j);
 				}
 				writer.write(record + "\n");
-				System.out.println(record);
+				//System.out.println(record);
 
 			}
 			writer.close();
