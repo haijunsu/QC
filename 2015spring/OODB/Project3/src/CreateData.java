@@ -20,6 +20,8 @@ public class CreateData {
 
 	public static void main(String[] args) {
 		try {
+			System.out.println("CS780 OODB Project 3, Spring 2015");
+			System.out.println("By Haijun Su");
 			CreateData cdata = new CreateData();
 			// initial pm
 			cdata.pm = Utilities.getPersistenceManager("transportation.odb");
@@ -231,6 +233,7 @@ public class CreateData {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("Done!");
 	}
 
 	/**
@@ -239,7 +242,7 @@ public class CreateData {
 	 * @param objs
 	 */
 	public <T> void makePersistent(List<T> objs) {
-		System.out.println("makePersistent....");
+//		System.out.println("makePersistent....");
 		pm.currentTransaction().begin();
 		for (T t : objs) {
 			pm.makePersistent(t);
@@ -264,7 +267,7 @@ public class CreateData {
 			throws NoSuchMethodException, SecurityException,
 			IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException {
-		System.out.println("findObjInList ...");
+//		System.out.println("findObjInList ...");
 		T rtn = null;
 		for (T t : objs) {
 			Class<? extends Object> clazz = t.getClass();
