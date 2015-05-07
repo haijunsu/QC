@@ -15,9 +15,12 @@
 # Name of saved file: [-fName name]
 
 # number of Networks
-nNBs=50
+#nNBs=50// 5
+nNBs=5
 # total records of data file
-records=(500 1000)
+#records=(500 1000)// 1000 5000
+#records=(1000 5000 10000)
+records=(500)
 
 # generate data
 genData() {
@@ -42,10 +45,12 @@ genData() {
 }
 
 # setting
-Nodes=(20 25 30 35)
-Degrees=(5 10 15 20 25)
+#Nodes=(20 25 30 35)//20 30
+Nodes=(20 30)
+Degrees=(5 10 15 20 25) 
 Arcs=(50 100 150 200 250)
-IWs=(2 5 8)
+#IWs=(2 5 8)//5 10 15
+IWs=(5 10 15)
 Values=(2 3)
 
 for i in "${Nodes[@]}"

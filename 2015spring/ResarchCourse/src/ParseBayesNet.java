@@ -29,6 +29,7 @@ public class ParseBayesNet {
 		System.out.println("Total files: " + totalFiles);
 		System.out.println("Total records per data file: " + totalRecords);
 		for (int i = 1; i <= totalFiles; i++) {
+			System.out.println("Generating records of " + args[0].trim() + i + " ...");
 			generateData(args[0].trim() + i, totalRecords);
 		}
 	}
