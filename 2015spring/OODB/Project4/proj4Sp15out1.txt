@@ -1,0 +1,109 @@
+-- TEST Studio.find --
+
+Queens Indie Film
+21st Century Film
+
+-- TEST Studio.studiosWithThisActor --
+
+Cinema Universals
+
+-- TEST Studio.studiosMinimumActors --
+
+Cinema Universals
+GMGA Studio
+
+-- TEST Studio.studiosInThisYear --
+
+
+-- TEST Actor.actedBetweenTheseYears --
+
+Andrew Brozozowski
+Mace Williams
+Salentio Monterieni
+
+-- TEST Actor.actedForThisStudio --
+
+Cathleen Beckham
+Elizabeth Ward
+Phillipe Adovo
+Siretta Sagne
+Thomas Chung
+
+-- TEST Director.find and Director.movies --
+
+Beacon Hill 2007
+Computational Energy 2012
+Wind 1980
+Yesterday Never Comes 2010
+
+-- TEST Director.studiosWithThisDirector --
+
+
+-- TEST Movie.sameTitle --
+
+Wind 1980
+Wind 2005
+
+-- TEST Movie.studioActors --
+
+
+-- TEST Movie.madeByDirectorBetweenTheseYears --
+
+Wind 1980
+
+-- TEST Movie.allMovieStudioDirectorTuples --
+
+Wind 1980
+Cinema Universals
+John Ford
+
+Phantom Town 1982
+GMGA Studio
+Michael Lloyd
+
+Lost in Orbit 1984
+21st Century Film
+Rundolf Wagner
+
+Emancipation 2000
+Cinema Universals
+Rundolf Wagner
+
+New York City Blues 2000
+GMGA Studio
+Rundolf Wagner
+
+Tea Time in Flushing Meadows 2000
+Cinema Universals
+Michael Lloyd
+
+Wind 2005
+21st Century Film
+Michael Lloyd
+
+Beacon Hill 2007
+GMGA Studio
+John Ford
+
+The Biological Code 2009
+Queens Indie Film
+Michael Lloyd
+
+Yesterday Never Comes 2010
+21st Century Film
+John Ford
+
+Computational Energy 2012
+Queens Indie Film
+John Ford
+
+-- TEST Movie.groupMoviesByDirector --
+
+Rundolf Wagner
+3
+
+John Ford
+4
+
+Michael Lloyd
+4
